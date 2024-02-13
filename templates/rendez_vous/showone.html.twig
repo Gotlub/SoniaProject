@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{rendezVous.dateControle|date('d/m/Y')}} {% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Rendez-vous n° dossier : {{rendezVous.numDossier}} </h1>
+        <h3>Date du contrôle : {{rendezVous.dateControle|date('d/m/Y')}}</h3>
+        <hr class="my-4">
+        <p>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</p>
+        <div class="jumbotron">
+             <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Client </th>
+                        <td>{{ rendezVous.Client.nom ~ ' ' ~ rendezVous.Client.prenom}}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ rendezVous.Adresse.adresse ~ ' , ' ~ rendezVous.Adresse.commune ~ ' ' ~ rendezVous.Adresse.cp }}</td>
+                    </tr>
+                    <tr>
+                        <th>Section cadastrale</th>
+                        <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Status facturation</th>
+                        <td>{{ rendezVous.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Facturation</th>
+                        <td>{{ rendezVous.facturation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date facturation</th>
+                        <td>{{ rendezVous.dateFacturation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Commentaire</th>
+                        <td>{{ rendezVous.commentaire }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status dossier</th>
+                        <td>{{ rendezVous.statusDossier }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type contrôle</th>
+                        <td>{{ rendezVous.typeControle }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type traitement</th>
+                        <td>{{ rendezVous.typeTraitement }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type installation</th>
+                        <td>{{ rendezVous.typeInstallation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rejet / infiltration</th>
+                        <td>{{ rendezVous.rejetInf }}</td>
+                    </tr>
+                    <tr>
+                        <th>Conformite</th>
+                        <td>{{ rendezVous.conformite }}</td>
+                    </tr>
+                    <tr>
+                        <th>Impact</th>
+                        <td>{{ rendezVous.impact }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rpqs</th>
+                        <td>{{ rendezVous.typeRpqs }}</td>
+                    </tr>
+                    <tr>
+                        <th>EF etudes</th>
+                        <td>{{ (rendezVous.efEtudes is same as(null)) ? 'Non' : 'EF etudes' }}</td>
+                    </tr>
+                    <tr>
+                        <th>EDN </th>
+                        <td>{{ (rendezVous.edn  is same as(null)) ? 'Non' : 'EDN' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

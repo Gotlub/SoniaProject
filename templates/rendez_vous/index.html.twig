@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RendezVousController!{% endblock %}
+
+{% block body %}
+    {% if dateConDeb|default(null) %}{% endif %}
+    {% if dateConFin|default(null) %}{% endif %}
+    {% if status|default(null) %}{% endif %}
+    {% if statusD|default(null) %}{% endif %}
+    {% if typeCon|default(null) %}{% endif %}
+    {% if numDosier|default(null) %}{% endif %}
+    {% if clientNom|default(null) %}{% endif %}
+    {% if clientPrenom|default(null) %}{% endif %}
+    {% if aDcommune|default(null) %}{% endif %}
+    {% if aDcadastre|default(null) %}{% endif %}
+    {% if efFiltre|default(null) %}{% endif %}
+    {% if ednFiltre|default(null) %}{% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Rdv index</h1>
+            <table style="width: 100;" class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <form class="form-inline mt-1" method="POST" action="">
+                        <th class="text-left align-top" scope="col">Date de contrôle
+                        </br>
+                        <div class="form-group mr-1 mb-2">
+                            <input type="date" class="input-group input-group-lg" name="dateConDeb" 
+                                value="{% if dateConDeb|default and dateConDeb != "**" %}{{ dateConDeb }}{% endif %}">
+                        </div>
+                        <div class="form-group mr-1 mb-2">
+                            <input type="date" class="input-group input-group-lg" name="dateConFin" 
+                                value="{% if dateConFin|default and dateConFin != "**" %}{{ dateConFin }}{% endif %}">
+                        </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Status Facturation
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="status" 
+                                    value="{% if status|default and status != "**" %}{{ status }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Status Dossier
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="statusD" 
+                                    value="{% if statusD|default and statusD != "**" %}{{ statusD }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Type du contrôle
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="typeCon" 
+                                    value="{% if typeCon|default and typeCon != "**" %}{{ typeCon }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Numero du dossier
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="numDosier"
+                                    value="{% if numDosier|default and numDosier != "**" %}{{ numDosier }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Nom client
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="clientNom" 
+                                    value="{% if clientNom|default and clientNom != "**" %}{{ clientNom }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Prenom client
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="clientPrenom" 
+                                    value="{% if clientPrenom|default and clientPrenom != "**" %}{{ clientPrenom }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Commune
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="aDcommune"
+                                    value="{% if aDcommune|default and aDcommune != "**" %}{{ aDcommune }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Cadastre S
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="aDcadastre"
+                                    value="{% if aDcadastre|default and aDcadastre != "**" %}{{ numDosier }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">
+                            <input type="checkbox" name="efFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
+                            <label for="scales">EF</label>
+                            <input type="checkbox" name="ednFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
+                            <label for="horns">EDN</label>
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                            </div>
+                        </th>
+                    </tr>
+                    </form>
+                </thead>
+                <tbody>
+                {% for rendezVous in pagination %}
+                    <tr>
+                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.dateControle|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.status }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.statusDossier }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.typeControle }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.numDossier }}</a></td>
+                        <td>{{ rendezVous.client.nom }}</td>
+                        <td>{{ rendezVous.client.prenom }}</td>
+                        <td>{{ rendezVous.Adresse.commune }}</td>
+                        <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
+                        <td></td>
+                        
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {# display navigation #}
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
