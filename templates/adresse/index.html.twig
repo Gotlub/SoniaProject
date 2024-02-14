@@ -1,20 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdresseController!{% endblock %}
+{% block title %}Adresse index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% if dateProDebF|default(null) %}{% endif %}
+    {% if dateProFinF|default(null) %}{% endif %}
+    {% if adresseVF|default(null) %}{% endif %}
+    {% if cpF|default(null) %}{% endif %}
+    {% if communeF|default(null) %}{% endif %}
+    {% if section_CF|default(null) %}{% endif %}
+    {% if ancienneAF|default(null) %}{% endif %}
+    {% if nbControleF|default(null) %}{% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Adresse index</h1>
+            <table style="width: 100;" class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <form class="form-inline mt-1" method="POST" action="{{ path('adresse.findallcontain') }}">
+                        <th class="text-left align-top" scope="col">Prochaine visite
+                        </br>
+                        <div class="form-group mr-1 mb-2">
+                            <input type="date" class="input-group input-group-lg" name="dateProDebF" 
+                                value="{% if dateProDebF|default and dateProDebF != "**" %}{{ dateProDebF }}{% endif %}">
+                        </div>
+                        <div class="form-group mr-1 mb-2">
+                            <input type="date" class="input-group input-group-lg" name="dateProFinF" 
+                                value="{% if dateProFinF|default and dateProFinF != "**" %}{{ dateProFinF }}{% endif %}">
+                        </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Adresse
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="adresseVF" 
+                                    value="{% if adresseVF|default and adresseVF != "**" %}{{ adresseVF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Code postal
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="cpF" 
+                                    value="{% if cpF|default and cpF != "**" %}{{ cpF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Commune
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="communeF" 
+                                    value="{% if communeF|default and communeF != "**" %}{{ communeF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Section cadastrale
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="section_CF"
+                                    value="{% if section_CF|default and section_CF != "**" %}{{ section_CF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Ancienne adresse
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="ancienneAF" 
+                                    value="{% if ancienneAF|default and ancienneAF != "**" %}{{ ancienneAF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Nombre de contrôles
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="nbControleF" 
+                                    value="{% if nbControleF|default and nbControleF != "**" %}{{ nbControleF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                            </div>
+                        </th>
+                    </tr>
+                    </form>
+                </thead>
+                <tbody>
+                {% for adresseEntite in pagination %}
+                    <tr>
+                        <td><a href="" class="link-white">{{ (adresseEntite.prochaineVisite == null ) ? 'Non renseigné ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</a></td>
+                        <td><a href="" class="link-white">{{ adresseEntite.adresseVisite }}</a></td>
+                        <td><a href="" class="link-white">{{ adresseEntite.cp }}</a></td>
+                        <td><a href="" class="link-white">{{ adresseEntite.commune }}</a></td>
+                        <td><a href="" class="link-white">{{ adresseEntite.sectionCadastrale }}</a></td>
+                        <td><a href="" class="link-white">{{ adresseEntite.ancienneAdresse }}</a></td>
+                        <td>
+                            <h5 class="text-center">
+                                {{ adresseEntite.RendezVous|length}} {{ (adresseEntite.RendezVous|length) > 1 ? 'visites' : 'visite' }}
+                            </h5>
+                        </td>
+                        <td></td>
+                        
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Projetsonia/Projet/src/Controller/AdresseController.php'|file_link(0) }}">src/Controller/AdresseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Projetsonia/Projet/templates/adresse/index.html.twig'|file_link(0) }}">templates/adresse/index.html.twig</a></code></li>
-    </ul>
-</div>
+            {# display navigation #}
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

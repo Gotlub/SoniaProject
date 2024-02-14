@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\RendezVous;
 use App\Repository\RendezVousRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -124,8 +123,8 @@ class RendezVousController extends AbstractController
             $params += array("edn" => "not null");
         }
 
-        if(count($params) == 0 && count($eFiltres) == 0 && count($dateCon)) {
-            return $this->redirectToRoute('app_engagement.index');
+        if(count($params) == 0 && count($eFiltres) == 0 && count($dateCon) == 0) {
+            return $this->redirectToRoute('rdv.index');
         }
         $pagination = $paginator->paginate(
             $rendezVousRepository->paginationQueryComplex($params, $dateCon, $eFiltres)->getResult(),

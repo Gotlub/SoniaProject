@@ -21,6 +21,16 @@ class AdresseRepository extends ServiceEntityRepository
         parent::__construct($registry, Adresse::class);
     }
 
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->leftjoin('a.rendez_vous', 'r')
+            ->groupBy('a.id')
+            ->orderBy('a.prochaine_visite', 'DESC')
+            ->getQuery()
+        ;
+    }
+
 //    /**
 //     * @return Adresse[] Returns an array of Adresse objects
 //     */

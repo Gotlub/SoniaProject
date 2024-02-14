@@ -89,6 +89,7 @@
                                     value="{% if aDcadastre|default and aDcadastre != "**" %}{{ aDcadastre }}{% endif %}">
                             </div>
                         </th>
+                        <th class="text-left align-top" scope="col">Prochaine visite</th>
                         <th class="text-left align-top" scope="col">
                             <input type="checkbox" name="efFiltre"  id="efFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
                             <label for="efFiltre">EF</label>
@@ -114,6 +115,7 @@
                         <td>{{ rendezVous.Adresse.adresseVisite ~ ' ' ~ rendezVous.Adresse.cp}}</td>
                         <td>{{ rendezVous.Adresse.commune }}</td>
                         <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
+                        <td>{{ (rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
                         <td></td>
                         
                     </tr>

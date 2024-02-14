@@ -16,7 +16,7 @@ class Adresse
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(name: "prochaine_visite", type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $prochaine_visite = null;
 
     #[ORM\Column(name: "adresse", length: 2000)]
@@ -34,7 +34,7 @@ class Adresse
     #[ORM\Column(length: 2000, nullable: true)]
     private ?string $ancienne_adresse = null;
 
-    #[ORM\OneToMany(mappedBy: 'Adresse', targetEntity: RendezVous::class)]
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: RendezVous::class)]
     private Collection $rendez_vous;
 
     public function __construct()
