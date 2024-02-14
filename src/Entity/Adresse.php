@@ -19,8 +19,8 @@ class Adresse
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $prochaine_visite = null;
 
-    #[ORM\Column(length: 2000)]
-    private ?string $adresse = null;
+    #[ORM\Column(name: "adresse", length: 2000)]
+    private ?string $adresseVisite = null;
 
     #[ORM\Column(length: 255)]
     private ?string $cp = null;
@@ -34,7 +34,7 @@ class Adresse
     #[ORM\Column(length: 2000, nullable: true)]
     private ?string $ancienne_adresse = null;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: RendezVous::class)]
+    #[ORM\OneToMany(mappedBy: 'Adresse', targetEntity: RendezVous::class)]
     private Collection $rendez_vous;
 
     public function __construct()
@@ -59,14 +59,14 @@ class Adresse
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAdresseVisite(): ?string
     {
-        return $this->adresse;
+        return $this->adresseVisite;
     }
 
-    public function setAdresse(string $adresse): static
+    public function setAdresseVisite(string $adresseVisite): static
     {
-        $this->adresse = $adresse;
+        $this->adresseVisite = $adresseVisite;
 
         return $this;
     }

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\RendezVous;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<RendezVous>
@@ -29,6 +30,27 @@ class RendezVousRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    public function paginationQueryComplex(array $params, array $dateCon, array $eFiltres) 
+    {
+        $sql = "SELECT r.*, a.*, c.* from rendez_vous r join adresse a On r.adresse_id = a.id  join client c On r.client_id = c.id where";
+        foreach ($params as $key => $value){
+            $sql .= " $key LIKE  '%$value%' and";
+        }
+        foreach ($dateCon as $key => $value){
+            $sql .= " r.date_controle $value and";
+        }
+        foreach ($eFiltres as $key => $value){
+            $sql .= " $key is $value and";
+        }
+        $sql = substr($sql, 0, strlen($sql)-3);
+        $sql .=" order by r.date_controle DESC";
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('App\Entity\RendezVous', 'r');
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        return $query;
+    }
+
 //    /**
 //     * @return RendezVous[] Returns an array of RendezVous objects
 //     */

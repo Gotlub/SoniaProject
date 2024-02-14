@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RendezVousController!{% endblock %}
+{% block title %}Rdv index{% endblock %}
 
 {% block body %}
     {% if dateConDeb|default(null) %}{% endif %}
@@ -10,7 +10,7 @@
     {% if typeCon|default(null) %}{% endif %}
     {% if numDosier|default(null) %}{% endif %}
     {% if clientNom|default(null) %}{% endif %}
-    {% if clientPrenom|default(null) %}{% endif %}
+    {% if Adadresse|default(null) %}{% endif %}
     {% if aDcommune|default(null) %}{% endif %}
     {% if aDcadastre|default(null) %}{% endif %}
     {% if efFiltre|default(null) %}{% endif %}
@@ -21,7 +21,7 @@
             <table style="width: 100;" class="table table-striped table-condensed">
                 <thead>
                     <tr>
-                        <form class="form-inline mt-1" method="POST" action="">
+                        <form class="form-inline mt-1" method="POST" action="{{ path('rdv.findallcontain') }}">
                         <th class="text-left align-top" scope="col">Date de contrôle
                         </br>
                         <div class="form-group mr-1 mb-2">
@@ -54,25 +54,25 @@
                                     value="{% if typeCon|default and typeCon != "**" %}{{ typeCon }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Numero du dossier
+                        <th class="text-left align-top" scope="col">N°Dossier
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="numDosier"
                                     value="{% if numDosier|default and numDosier != "**" %}{{ numDosier }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Nom client
+                        <th  class="text-left align-top" scope="col">Client
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="clientNom" 
                                     value="{% if clientNom|default and clientNom != "**" %}{{ clientNom }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Prenom client
+                        <th  class="text-left align-top" scope="col">Adresse
                         </br>
                             <div class="form-group mr-1 mb-2">
-                                <input type="text" class="input-group input-group-lg" name="clientPrenom" 
-                                    value="{% if clientPrenom|default and clientPrenom != "**" %}{{ clientPrenom }}{% endif %}">
+                                <input type="text" class="input-group input-group-lg" name="Adadresse" 
+                                    value="{% if Adadresse|default and Adadresse != "**" %}{{ Adadresse }}{% endif %}">
                             </div>
                         </th>
                         <th class="text-left align-top" scope="col">Commune
@@ -86,14 +86,14 @@
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="aDcadastre"
-                                    value="{% if aDcadastre|default and aDcadastre != "**" %}{{ numDosier }}{% endif %}">
+                                    value="{% if aDcadastre|default and aDcadastre != "**" %}{{ aDcadastre }}{% endif %}">
                             </div>
                         </th>
                         <th class="text-left align-top" scope="col">
-                            <input type="checkbox" name="efFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
-                            <label for="scales">EF</label>
-                            <input type="checkbox" name="ednFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
-                            <label for="horns">EDN</label>
+                            <input type="checkbox" name="efFiltre"  id="efFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
+                            <label for="efFiltre">EF</label>
+                            <input type="checkbox" name="ednFiltre" id="ednFiltre" {% if ednFiltre|default and ednFiltre != "**" %}checked{% endif %} />
+                            <label for="ednFiltre">EDN</label>
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
@@ -110,8 +110,8 @@
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.statusDossier }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.typeControle }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.numDossier }}</a></td>
-                        <td>{{ rendezVous.client.nom }}</td>
-                        <td>{{ rendezVous.client.prenom }}</td>
+                        <td>{{ rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</td>
+                        <td>{{ rendezVous.Adresse.adresseVisite ~ ' ' ~ rendezVous.Adresse.cp}}</td>
                         <td>{{ rendezVous.Adresse.commune }}</td>
                         <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
                         <td></td>

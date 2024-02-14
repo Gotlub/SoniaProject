@@ -8,6 +8,8 @@
         <h3>Date du contrôle : {{rendezVous.dateControle|date('d/m/Y')}}</h3>
         <hr class="my-4">
         <p>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</p>
+        <br/>
+        <p>Client RDV :</p>
         <div class="jumbotron">
              <table class="table">
                 <tbody>
@@ -16,16 +18,51 @@
                         <td>{{ rendezVous.Client.nom ~ ' ' ~ rendezVous.Client.prenom}}</td>
                     </tr>
                     <tr>
-                        <th>Adresse</th>
-                        <td>{{ rendezVous.Adresse.adresse ~ ' , ' ~ rendezVous.Adresse.commune ~ ' ' ~ rendezVous.Adresse.cp }}</td>
+                        <th>Adresse Facturation</th>
+                        <td>{{ rendezVous.Client.adresseFacturation ~ ' , ' ~ rendezVous.Client.cpFacturation ~ ' ' ~ rendezVous.Client.communeFacturation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <td>{{ rendezVous.Client.mail }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tel</th>
+                        <td>{{ rendezVous.Client.tel }}</td>
+                    </tr>
+                     <tr>
+                        <th>Adresse Contact</th>
+                        <td>{{ rendezVous.Client.adresseClient ~ '  ' ~  rendezVous.Client.cpClient}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tel</th>
+                        <td>{{ rendezVous.Client.tel }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <p>Adresse RDV:</p>
+             <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Prochaine visite</th>
+                        <td>{{ rendezVous.Adresse.prochaineVisite|date('d/m/Y')}}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse visite</th>
+                        <td>{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</td>
                     </tr>
                     <tr>
                         <th>Section cadastrale</th>
                         <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
                     </tr>
+                    <tr>
+                        <th>Ancien nom de la rue</th>
+                        <td>{{ rendezVous.Adresse.ancienneAdresse }}</td>
+                    </tr>
                 </tbody>
             </table>
             <br/>
+            <p>Rendez-vous :</p>
             <table class="table">
                 <tbody>
                     <tr>

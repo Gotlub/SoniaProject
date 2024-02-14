@@ -64,7 +64,7 @@ class RendezVous
 
     #[ORM\ManyToOne(inversedBy: 'rendez_vous')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?adresse $adresse = null;
+    private ?Adresse $adresse = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $EF_etudes = null;
