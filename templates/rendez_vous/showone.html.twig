@@ -37,6 +37,14 @@
                         <th>Tel</th>
                         <td>{{ rendezVous.Client.tel }}</td>
                     </tr>
+                     <tr>
+                        <th>Derniere visite</th>
+                        <td>{{ rendezVous.Client.dernierRdv.dateControle|date('d/m/Y')}}</td>
+                    </tr>
+                     <tr>
+                        <th>Derniere adresse visité</th>
+                        <td>{{ rendezVous.Client.dernierRdv.Adresse.adresseVisite ~ ' ' ~ rendezVous.Client.dernierRdv.Adresse.commune }}</td>
+                    </tr>
                 </tbody>
             </table>
             <br/>
@@ -45,7 +53,7 @@
                 <tbody>
                     <tr>
                         <th>Prochaine visite</th>
-                        <td>{{ rendezVous.Adresse.prochaineVisite|date('d/m/Y')}}</td>
+                        <td>{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
                     </tr>
                     <tr>
                         <th>Adresse visite</th>
@@ -58,6 +66,14 @@
                     <tr>
                         <th>Ancien nom de la rue</th>
                         <td>{{ rendezVous.Adresse.ancienneAdresse }}</td>
+                    </tr>
+                     <tr>
+                        <th>Derniere visite</th>
+                        <td>{{ rendezVous.Adresse.dernierRdv.dateControle|date('d/m/Y')}}</td>
+                    </tr>
+                     <tr>
+                        <th>Client a la derniere visite</th>
+                        <td>{{ rendezVous.Adresse.dernierRdv.Client.nom ~ ' ' ~ rendezVous.Adresse.dernierRdv.Client.prenom }}</td>
                     </tr>
                 </tbody>
             </table>

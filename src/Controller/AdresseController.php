@@ -16,7 +16,6 @@ class AdresseController extends AbstractController
     public function index(AdresseRepository $adresseRepository,
     Request $request, PaginatorInterface $paginator): Response
     {
-       //dd( $adresseRepository->paginationQuery());
         $pagination = $paginator->paginate(
             $adresseRepository->paginationQuery(),
             $request->query->get('page', 1),
@@ -28,12 +27,24 @@ class AdresseController extends AbstractController
         ]);
     }
 
+    #[Route('/adresse/{id}', name: 'adresse.showone', methods: ['GET'])]
+    public function show(Adresse $adresse): Response
+    {
+        return $this->render('adresse/showone.html.twig', [
+            'adresseEntite' => $adresse
+        ]);
+    }
+
     #[Route('/adresse/findallcontain', name: 'adresse.findallcontain', methods: ['POST'])]
     public function findAllContain(Request $request): Response{
         $dateProDebF = $request->get("dateProDebF");
         $dateProDebF = ($dateProDebF == "") ? "**" : $dateProDebF;
         $dateProFinF = $request->get("dateProFinF");
         $dateProFinF = ($dateProFinF == "") ? "**" : $dateProFinF;
+        $dateAncDebF = $request->get("dateAncDebF");
+        $dateAncDebF = ($dateAncDebF == "") ? "**" : $dateAncDebF;
+        $dateAncFinF = $request->get("dateAncFinF");
+        $dateAncFinF = ($dateAncFinF == "") ? "**" : $dateAncFinF;
         $adresseVF = $request->get("adresseVF");
         $adresseVF = ($adresseVF == "") ? "**" : $adresseVF;
         $cpF = $request->get("cpF");
@@ -42,31 +53,35 @@ class AdresseController extends AbstractController
         $communeF = ($communeF == "") ? "**" : $communeF;
         $section_CF = $request->get("section_CF");
         $section_CF = ($section_CF == "") ? "**" : $section_CF;
-        $ancienneAF = $request->get("ancienneAF");
-        $ancienneAF = ($ancienneAF == "") ? "**" : $ancienneAF;
+        $dernierClientF = $request->get("dernierClientF");
+        $dernierClientF = ($dernierClientF == "") ? "**" : $dernierClientF;
         $nbControleF = $request->get("nbControleF");
         $nbControleF = ($nbControleF == "") ? "**" : $nbControleF;
 
         return $this->redirectToRoute('adresse.findallcontainReq', [
             'dateProDebF' => $dateProDebF,
             'dateProFinF' => $dateProFinF,
+            'dateAncDebF' => $dateAncDebF,
+            'dateAncFinF' => $dateAncFinF,
             'adresseVF' => $adresseVF,
             'cpF' => $cpF,
             'communeF' => $communeF,
             'section_CF' => $section_CF,
-            'ancienneAF' => $ancienneAF,
+            'dernierClientF' => $dernierClientF,
             'nbControleF' => $nbControleF
         ]);
     }
 
-    #[Route('/adresse/{dateProDebF}/{dateProFinF}/{adresseVF}/{cpF}/{communeF}/{section_CF}/{ancienneAF}/{nbControleF}', name: 'adresse.findallcontainReq', methods: ['GET'])]
+    #[Route('/adresse/{dateProDebF}/{dateProFinF}/{dateAncDebF}/{dateAncFinF}/{adresseVF}/{cpF}/{communeF}/{section_CF}/{dernierClientF}/{nbControleF}', name: 'adresse.findallcontainReq', methods: ['GET'])]
     public function findAllContainReq( AdresseRepository $adresseRepository,
     Request $request, PaginatorInterface $paginator,
-    string $dateProDebF, string $dateProFinF, string $adresseVF, string $cpF, string $communeF, string $section_CF, string $ancienneAF,
+    string $dateProDebF, string $dateProFinF, string $dateAncDebF, string $dateAncFinF, string $adresseVF, string $cpF, string $communeF, string $section_CF, string $dernierClientF,
     string $nbControleF): Response{
         $interup = false;
         $requete =  $adresseRepository->createQueryBuilder('a')
-            ->leftjoin('a.rendez_vous', 'r');
+            ->leftjoin('a.rendez_vous', 'r')
+            ->join('a.dernier_rdv', 'd')
+            ->join('d.client', 'c');
         if($cpF != "**"){
             $requete->where('a.cp like :cpF')
             ->setParameter('cpF', '%'.$cpF.'%');
@@ -83,6 +98,16 @@ class AdresseController extends AbstractController
         if($dateProFinF != "**"){
             $requete->andwhere('a.prochaine_visite <= :dateProFinF')
             ->setParameter('dateProFinF', $dateProFinF);
+            $interup = true;
+        }
+        if($dateAncDebF != "**" ){
+            $requete->andwhere('d.date_controle >= :dateAnc')
+            ->setParameter('dateAnc', $dateAncDebF);
+            $interup = true;
+        }
+        if($dateAncFinF != "**"){
+            $requete->andwhere('d.date_controle <= :dateAncFin')
+            ->setParameter('dateAncFin', $dateAncFinF);
             $interup = true;
         }
         if($adresseVF != "**"){
@@ -105,9 +130,9 @@ class AdresseController extends AbstractController
             ->setParameter('section_CF', '%'.$section_CF.'%');
             $interup = true;
         }
-        if($ancienneAF != "**"){
-            $requete->andwhere('a.ancienne_adresse like :ancienneAF')
-            ->setParameter('ancienneAF', '%'.$ancienneAF.'%');
+        if($dernierClientF != "**"){
+            $requete->andwhere('c.nom like :dernierClientF')
+            ->setParameter('dernierClientF', '%'.$dernierClientF.'%');
             $interup = true;
         }
         $requete->groupBy('a.id')
@@ -126,16 +151,17 @@ class AdresseController extends AbstractController
             20
         );
 
-
         return $this->render('adresse/index.html.twig', [
             'pagination' => $pagination,
             'dateProDebF' => $dateProDebF,
             'dateProFinF' => $dateProFinF,
+            'dateAncDebF' => $dateAncDebF,
+            'dateAncFinF' => $dateAncFinF,
             'adresseVF' => $adresseVF,
             'cpF' => $cpF,
             'communeF' => $communeF,
             'section_CF' => $section_CF,
-            'ancienneAF' => $ancienneAF,
+            'dernierClientF' => $dernierClientF,
             'nbControleF' => $nbControleF
         ]);
     }

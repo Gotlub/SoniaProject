@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{adresseEntite.adresseVisite}} {% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>{{adresseEntite.adresseVisite}} </h1>
+        <h3>{{ (adresseEntite.prochaineVisite == null ) ? '  ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</h3>
+        <hr class="my-4">
+        <p>{{ adresseEntite.cp }}</p>
+        <br/>
+        <p>Adresse :</p>
+        <div class="jumbotron">
+             <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Adresse : </th>
+                        <td>{{ adresseEntite.adresseVisite }}</td>
+                    </tr>
+                    <tr>
+                        <th>Code postal :</th>
+                        <td>{{ adresseEntite.cp }}</td>
+                    </tr>
+                    <tr>
+                        <th>Commune :</th>
+                        <td>{{ adresseEntite.commune}}</td>
+                    </tr>
+                    <tr>
+                        <th>Prochaine visite :</th>
+                        <td>{{ (adresseEntite.prochaineVisite == null ) ? 'Non renseigné ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Section cadastrale</th>
+                        <td>{{ adresseEntite.sectionCadastrale}}</td>
+                    </tr>
+                    <tr>
+                        <th>Ancienne adresse :</th>
+                        <td>{{ adresseEntite.ancienneAdresse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Client au dernier rdv :</th>
+                        <td>{{ adresseEntite.dernierRdv.Client.nom ~ ' ' ~  adresseEntite.dernierRdv.Client.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date du dernier rdv</th>
+                        <td>{{ adresseEntite.dernierRdv.dateControle|date('d/m/y') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <hr class="my-4">
+            <h2>Rendez vous a cette adresse : </h3>
+            <table style="width: 100;" class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-left align-top" scope="col">Date de contrôle
+                        </th>
+                        <th  class="text-left align-top" scope="col">Status Facturation
+                        </th>
+                        <th  class="text-left align-top" scope="col">Status Dossier
+                        </th>
+                        <th class="text-left align-top" scope="col">Type du contrôle
+                        </th>
+                        <th class="text-left align-top" scope="col">N°Dossier
+                        </th>
+                        <th  class="text-left align-top" scope="col">Client
+                        </th>
+                        <th  class="text-left align-top" scope="col">Adresse
+                        </th>
+                        <th class="text-left align-top" scope="col">Commune
+                        </th>
+                        <th class="text-left align-top" scope="col">Cadastre S
+                        </th>
+                        <th class="text-left align-top" scope="col">Prochaine visite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rdv in adresseEntite.rendezVous %}
+                    <tr>
+                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.dateControle|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.status }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.statusDossier }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.typeControle }}</a></td>
+                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.numDossier }}</a></td>
+                        <td>{{ rdv.client.nom ~ ' ' ~ rdv.client.prenom }}</td>
+                        <td>{{ rdv.Adresse.adresseVisite ~ ' ' ~ rdv.Adresse.cp}}</td>
+                        <td>{{ rdv.Adresse.commune }}</td>
+                        <td>{{ rdv.Adresse.sectionCadastrale }}</td>
+                        <td>{{ (rdv.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rdv.Adresse.prochaineVisite|date('d/m/Y') }}</td>
+                        <td></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br/>
+        
+        </div>
+    </div>
+{% endblock %}

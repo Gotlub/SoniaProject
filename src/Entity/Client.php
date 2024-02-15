@@ -45,6 +45,9 @@ class Client
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cp_client = null;
 
+    #[ORM\OneToOne( cascade: ['persist', 'remove'])]
+    private ?RendezVous $dernier_rdv = null;
+
     public function __construct()
     {
         $this->rendezVous = new ArrayCollection();
@@ -189,6 +192,18 @@ class Client
     public function setCpClient(?string $cp_client): static
     {
         $this->cp_client = $cp_client;
+
+        return $this;
+    }
+
+    public function getDernierRdv(): ?RendezVous
+    {
+        return $this->dernier_rdv;
+    }
+
+    public function setDernierRdv(?RendezVous $dernier_rdv): static
+    {
+        $this->dernier_rdv = $dernier_rdv;
 
         return $this;
     }

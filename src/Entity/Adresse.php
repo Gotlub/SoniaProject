@@ -37,6 +37,9 @@ class Adresse
     #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: RendezVous::class)]
     private Collection $rendez_vous;
 
+    #[ORM\OneToOne ( cascade: ['persist', 'remove'])]
+    private ?RendezVous $dernier_rdv = null;
+
     public function __construct()
     {
         $this->rendez_vous = new ArrayCollection();
@@ -145,6 +148,18 @@ class Adresse
                 $rendezVou->setAdresse(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDernierRdv(): ?RendezVous
+    {
+        return $this->dernier_rdv;
+    }
+
+    public function setDernierRdv(?RendezVous $dernier_rdv): static
+    {
+        $this->dernier_rdv = $dernier_rdv;
 
         return $this;
     }

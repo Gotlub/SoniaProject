@@ -16,22 +16,24 @@ class RendezVousController extends AbstractController
     public function index(RendezVousRepository $rendezVousRepository,
     Request $request, PaginatorInterface $paginator): Response
     {
+
         $pagination = $paginator->paginate(
             $rendezVousRepository->paginationQuery(),
             $request->query->get('page', 1),
             20
         );
-
+        //dd($pagination);
         return $this->render('rendez_vous/index.html.twig', [
-            'pagination' => $pagination,
+            'pagination' => $pagination
         ]);
     }
 
     #[Route('/rdv/{id}', name: 'rdv.showone', methods: ['GET', 'POST'])]
     public function show(RendezVous $rendezVous): Response
     {
+       //dd($rendezVous);
         return $this->render('rendez_vous/showone.html.twig', [
-            'rendezVous' => $rendezVous,
+            'rendezVous' => $rendezVous
         ]);
     }
 

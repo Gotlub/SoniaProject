@@ -55,15 +55,15 @@ class RendezVous
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $impact = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable : true)]
     private ?string $type_RPQS = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendez_vous')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Adresse $adresse = null;
 
     #[ORM\Column(nullable: true)]
