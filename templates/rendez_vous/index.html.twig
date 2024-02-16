@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <form class="form-inline mt-1" method="POST" action="{{ path('rdv.findallcontain') }}">
-                        <th class="text-left align-top" scope="col">Date de contrôle
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.date_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date de contrôle ', 'r.date_controle') }}
                         </br>
                         <div class="form-group mr-1 mb-2">
                             <input type="date" class="input-group input-group-lg" name="dateConDeb" 
@@ -33,56 +33,56 @@
                                 value="{% if dateConFin|default and dateConFin != "**" %}{{ dateConFin }}{% endif %}">
                         </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Status Facturation
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('r.status') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status Facturation ', 'r.status') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="status" 
                                     value="{% if status|default and status != "**" %}{{ status }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Status Dossier
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('r.status_dossier') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status Dossier', 'r.status_dossier') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="statusD" 
                                     value="{% if statusD|default and statusD != "**" %}{{ statusD }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Type du contrôle
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.type_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Type du contrôle', 'r.type_controle') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="typeCon" 
                                     value="{% if typeCon|default and typeCon != "**" %}{{ typeCon }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">N°Dossier
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.num_dossier') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'N°Dossier ', 'r.num_dossier') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="numDosier"
                                     value="{% if numDosier|default and numDosier != "**" %}{{ numDosier }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Client
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('c.nom') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Client', 'c.nom') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="clientNom" 
                                     value="{% if clientNom|default and clientNom != "**" %}{{ clientNom }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Adresse
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('a.adresseVisite') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Adresse', 'a.adresseVisite') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="Adadresse" 
                                     value="{% if Adadresse|default and Adadresse != "**" %}{{ Adadresse }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Commune
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('a.commune') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Commune', 'a.commune') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="aDcommune"
                                     value="{% if aDcommune|default and aDcommune != "**" %}{{ aDcommune }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Cadastre S
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('a.section_cadastrale') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Cadastre S', 'a.section_cadastrale') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="aDcadastre"

@@ -26,6 +26,8 @@ class RendezVousRepository extends ServiceEntityRepository
     public function paginationQuery()
     {
         return $this->createQueryBuilder('r')
+            ->join('r.client', 'c')
+            ->join('r.adresse', 'a')
             ->orderBy('r.date_controle', 'DESC')
             ->getQuery()
         ;

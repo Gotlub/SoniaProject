@@ -146,11 +146,13 @@ class AdresseController extends AbstractController
             return $this->redirectToRoute('adresse.index');
         }
         $pagination = $paginator->paginate(
-            $requete->getQuery()->getResult(),
+            $requete->getQuery(),
             $request->query->get('page', 1),
-            20
+            20,
+            array('wrap-queries'=>true)
+            
         );
-
+        //dd($pagination);
         return $this->render('adresse/index.html.twig', [
             'pagination' => $pagination,
             'dateProDebF' => $dateProDebF,

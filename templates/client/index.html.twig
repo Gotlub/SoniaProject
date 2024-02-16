@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <form class="form-inline mt-1" method="POST" action="{{ path('client.findallcontain') }}">
-                        <th class="text-left align-top" scope="col">Derniere visite client
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('d.date_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Derniere visite client', 'd.date_controle') }}
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="date" class="input-group input-group-lg" name="dRdvDateDebF" 
@@ -29,7 +29,7 @@
                                     value="{% if dRdvDateFinF|default and dRdvDateFinF != "**" %}{{ dRdvDateFinF }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Nom 
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('c.nom') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'c.nom') }} 
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="nomF" 
@@ -37,35 +37,35 @@
                             </div>
                         </th>
                         </th>
-                        <th class="text-left align-top" scope="col">Adresse e-mail
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('c.mail') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Adresse e-mail', 'c.mail') }}
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="mailF"
                                     value="{% if mailF|default and mailF != "**" %}{{ mailF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Téléphone
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('c.tel') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Téléphone', 'c.tel') }}
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="telF" 
                                     value="{% if telF|default and telF != "**" %}{{ telF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Dernière adresse Rdv client
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('a.adresseVisite') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Dernière adresse Rdv client ', 'a.adresseVisite') }}
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="dernierRdvAdresseF" 
                                     value="{% if dernierRdvAdresseF|default and dernierRdvAdresseF != "**" %}{{ dernierRdvAdresseF }}{% endif %}">
                             </div>
                         </th>
-                         <th  class="text-left align-top" scope="col">Dernière commune Rdv client
+                         <th  class="text-left align-top" scope="col" {% if pagination.isSorted('a.commune') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Dernière commune Rdv client ', 'a.commune') }}
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="dernierRdvCommuneF" 
                                     value="{% if dernierRdvCommuneF|default and dernierRdvCommuneF != "**" %}{{ dernierRdvCommuneF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Nombre de rendez-vous
+                        <th  class="text-left align-top" scope="col">Nombre de rendez-vous 
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="nbRdvF" 

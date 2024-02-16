@@ -25,6 +25,8 @@ class AdresseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->leftjoin('a.rendez_vous', 'r')
+            ->join('a.dernier_rdv', 'd')
+            ->join('d.client', 'c')
             ->groupBy('a.id')
             ->orderBy('a.prochaine_visite', 'DESC')
             ->getQuery()

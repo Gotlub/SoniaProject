@@ -25,6 +25,8 @@ class ClientRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->leftjoin('c.rendezVous', 'r')
+            ->join('c.dernier_rdv', 'd')
+            ->join('d.adresse', 'a')
             ->groupBy('c.id')
             ->orderBy('c.nom', 'ASC')
             ->getQuery()

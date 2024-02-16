@@ -123,7 +123,7 @@ class ClientController extends AbstractController
             return $this->redirectToRoute('client.index');
         }
         $pagination = $paginator->paginate(
-            $requete->getQuery()->getResult(),
+            $requete->getQuery(),
             $request->query->get('page', 1),
             20
         );

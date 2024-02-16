@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <form class="form-inline mt-1" method="POST" action="{{ path('adresse.findallcontain') }}">
-                        <th class="text-left align-top" scope="col">Prochaine visite
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('a.prochaine_visite') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Prochaine visite', 'a.prochaine_visite') }}
                         </br>
                         <div class="form-group mr-1 mb-2">
                             <input type="date" class="input-group input-group-lg" name="dateProDebF" 
@@ -31,7 +31,7 @@
                                 value="{% if dateProFinF|default and dateProFinF != "**" %}{{ dateProFinF }}{% endif %}">
                         </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Dernier Rdv a cette adresse
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('d.date_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Dernier Rdv a cette adresse', 'd.date_controle') }}
                         </br>
                         <div class="form-group mr-1 mb-2">
                             <input type="date" class="input-group input-group-lg" name="dateAncDebF" 
@@ -42,42 +42,42 @@
                                 value="{% if dateAncFinF|default and dateAncFinF != "**" %}{{ dateAncFinF }}{% endif %}">
                         </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Adresse
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('a.adresseVisite') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Adresse', 'a.adresseVisite') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="adresseVF" 
                                     value="{% if adresseVF|default and adresseVF != "**" %}{{ adresseVF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Code postal
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('a.cp') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Code postal', 'a.cp') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="cpF" 
                                     value="{% if cpF|default and cpF != "**" %}{{ cpF }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Commune
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('a.commune') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Commune', 'a.commune') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="communeF" 
                                     value="{% if communeF|default and communeF != "**" %}{{ communeF }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Section cadastrale
+                        <th class="text-left align-top" scope="col"{% if pagination.isSorted('a.section_cadastrale') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Section cadastrale', 'a.section_cadastrale') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="section_CF"
                                     value="{% if section_CF|default and section_CF != "**" %}{{ section_CF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Client a la derniere visite
+                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('c.nom') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Client a la derniere visite', 'c.nom') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="dernierClientF" 
                                     value="{% if dernierClientF|default and dernierClientF != "**" %}{{ dernierClientF }}{% endif %}">
                             </div>
                         </th>
-                        <th  class="text-left align-top" scope="col">Nombre de contrôles
+                        <th class="text-left align-top" scope="col" >Nombre de contrôles
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="nbControleF" 
