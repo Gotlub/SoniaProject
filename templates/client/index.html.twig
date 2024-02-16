@@ -1,20 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ClientController!{% endblock %}
+{% block title %}Client index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% if dRdvDateDebF|default(null) %}{% endif %}
+    {% if dRdvDateFinF|default(null) %}{% endif %}
+    {% if nomF|default(null) %}{% endif %}
+    {% if mailF|default(null) %}{% endif %}
+    {% if telF|default(null) %}{% endif %}
+    {% if dernierRdvAdresseF|default(null) %}{% endif %}
+    {% if dernierRdvCommuneF|default(null) %}{% endif %}
+    {% if nbRdvF|default(null) %}{% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Client index</h1>
+            <table style="width: 100;" class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <form class="form-inline mt-1" method="POST" action="{{ path('client.findallcontain') }}">
+                        <th class="text-left align-top" scope="col">Derniere visite client
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="date" class="input-group input-group-lg" name="dRdvDateDebF" 
+                                    value="{% if dRdvDateDebF|default and dRdvDateDebF != "**" %}{{ dRdvDateDebF }}{% endif %}">
+                            </div>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="date" class="input-group input-group-lg" name="dRdvDateFinF" 
+                                    value="{% if dRdvDateFinF|default and dRdvDateFinF != "**" %}{{ dRdvDateFinF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">Nom 
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="nomF" 
+                                    value="{% if nomF|default and nomF != "**" %}{{ nomF }}{% endif %}">
+                            </div>
+                        </th>
+                        </th>
+                        <th class="text-left align-top" scope="col">Adresse e-mail
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="mailF"
+                                    value="{% if mailF|default and mailF != "**" %}{{ mailF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Téléphone
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="telF" 
+                                    value="{% if telF|default and telF != "**" %}{{ telF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Dernière adresse Rdv client
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="dernierRdvAdresseF" 
+                                    value="{% if dernierRdvAdresseF|default and dernierRdvAdresseF != "**" %}{{ dernierRdvAdresseF }}{% endif %}">
+                            </div>
+                        </th>
+                         <th  class="text-left align-top" scope="col">Dernière commune Rdv client
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="dernierRdvCommuneF" 
+                                    value="{% if dernierRdvCommuneF|default and dernierRdvCommuneF != "**" %}{{ dernierRdvCommuneF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th  class="text-left align-top" scope="col">Nombre de rendez-vous
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="nbRdvF" 
+                                    value="{% if nbRdvF|default and nbRdvF != "**" %}{{ nbRdvF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col">
+                            </br>
+                            <div class="form-group mr-1 mb-2">
+                                <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                            </div>
+                        </th>
+                    </tr>
+                    </form>
+                </thead>
+                <tbody>
+                {% for client in pagination %}
+                    <tr>
+                        <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ (client.dernierRdv.dateControle == null ) ? 'Non renseigné ' : client.dernierRdv.dateControle|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.nom ~ ' ' ~  client.prenom }}</a></td>
+                        <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.mail }}</a></td>
+                        <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.tel }}</a></td>
+                        <td><a href="{{ path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{ client.dernierRdv.Adresse.adresseVisite }}</a></td>
+                        <td><a href="{{ path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{ client.dernierRdv.Adresse.commune ~ ' ' ~  client.dernierRdv.Adresse.cp}}</a></td>
+                        <td>
+                            <h5 class="text-center">
+                                {{ client.RendezVous|length}} {{ (client.RendezVous|length) > 1 ? 'visites' : 'visite' }}
+                            </h5>
+                        </td>
+                        <td></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Projetsonia/Projet/src/Controller/ClientController.php'|file_link(0) }}">src/Controller/ClientController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Projetsonia/Projet/templates/client/index.html.twig'|file_link(0) }}">templates/client/index.html.twig</a></code></li>
-    </ul>
-</div>
+            {# display navigation #}
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

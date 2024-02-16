@@ -21,6 +21,16 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftjoin('c.rendezVous', 'r')
+            ->groupBy('c.id')
+            ->orderBy('c.nom', 'ASC')
+            ->getQuery()
+        ;
+    }
+
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */

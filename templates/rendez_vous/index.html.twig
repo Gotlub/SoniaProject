@@ -111,11 +111,11 @@
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.statusDossier }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.typeControle }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.numDossier }}</a></td>
-                        <td>{{ rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</td>
-                        <td>{{ rendezVous.Adresse.adresseVisite ~ ' ' ~ rendezVous.Adresse.cp}}</td>
-                        <td>{{ rendezVous.Adresse.commune }}</td>
+                        <td><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</a></td>
+                        <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite }}</a></td>
+                        <td>{{ rendezVous.Adresse.Commune ~ ' ' ~ rendezVous.Adresse.cp}}</td>
                         <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
-                        <td>{{ (rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
+                        <td>{{ (rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</a></td>
                         <td></td>
                         
                     </tr>

@@ -9,13 +9,13 @@
         <hr class="my-4">
         <p>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</p>
         <br/>
-        <p>Client RDV :</p>
+        <strong><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white"><p>Client RDV :</p></a></strong>
         <div class="jumbotron">
              <table class="table">
                 <tbody>
                     <tr>
-                        <th>Client </th>
-                        <td>{{ rendezVous.Client.nom ~ ' ' ~ rendezVous.Client.prenom}}</td>
+                        <th><strong><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">Client </a></strong></th>
+                        <td><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ rendezVous.Client.nom ~ ' ' ~ rendezVous.Client.prenom}}</a></td>
                     </tr>
                     <tr>
                         <th>Adresse Facturation</th>
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
             <br/>
-            <p>Adresse RDV:</p>
+            <strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white"><p>Adresse RDV:</p></a></strong>
              <table class="table">
                 <tbody>
                     <tr>
@@ -56,8 +56,8 @@
                         <td>{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
                     </tr>
                     <tr>
-                        <th>Adresse visite</th>
-                        <td>{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</td>
+                        <th><strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">Adresse visite</a></strong></th>
+                        <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</a></td>
                     </tr>
                     <tr>
                         <th>Section cadastrale</th>
