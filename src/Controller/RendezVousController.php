@@ -85,51 +85,77 @@ class RendezVousController extends AbstractController
     Request $request, PaginatorInterface $paginator,
     string $dateConDeb ,string  $dateConFin,string  $status,string $statusD,string $typeCon,string $numDosier,string $clientNom,
     string $Adadresse, string $aDcommune, string $aDcadastre, string $efFiltre, string $ednFiltre): Response{
-        $params = array();
-        $eFiltres = array();
-        $dateCon = array();
+        $interup = false;
+        $requete = $rendezVousRepository->createQueryBuilder('r')
+                    ->join('r.client', 'c')
+                    ->join('r.adresse', 'a')
+                    ->where('1 = :triche')
+                    ->setParameter('triche', 1);
         if($dateConDeb != "**" ){
-            $dateCon += array("dateConDeb" => ">= '$dateConDeb'");
+            $requete->andwhere('r.date_controle >= :dateConDeb')
+            ->setParameter('dateConDeb', $dateConDeb);
+            $interup = true;
         }
         if($dateConFin != "**"){
-            $dateCon += array("dateConFin" => "<= '$dateConFin'");
+            $requete->andwhere('r.date_controle <= :dateConFin')
+                ->setParameter('dateConFin', $dateConFin);
+            $interup = true;
         }
         if($status != "**"){
-            $params += array("status" => $status);
+            $requete->andwhere('r.status like :status')
+                ->setParameter('status', '%'.$status.'%');
+            $interup = true;
         }
         if($statusD != "**"){
-            $params += array("status_dossier" => $statusD);
+            $requete->andwhere('r.status_dossier like :statusD')
+                ->setParameter('statusD', '%'.$statusD.'%');
+            $interup = true;
         }
         if($typeCon != "**"){
-            $params += array("type_controle" => $typeCon);
+            $requete->andwhere('r.type_controle like :typeCon')
+                ->setParameter('typeCon', '%'.$typeCon.'%');
+            $interup = true;
         }
         if($numDosier != "**"){
-            $params += array("num_dossier" => $numDosier);
+            $requete->andwhere('r.num_dossier like :numDosier')
+                ->setParameter('numDosier', '%'.$numDosier.'%');
+            $interup = true;
         }
         if($clientNom != "**"){
-            $params += array("c.nom" => $clientNom);
+            $requete->andwhere('c.nom like :clientNom')
+                ->setParameter('clientNom', '%'.$clientNom.'%');
+            $interup = true;
         }
         if($Adadresse != "**"){
-            $params += array("a.adresse" => $Adadresse);
+            $requete->andwhere('a.adresse like :Adadresse')
+                ->setParameter('Adadresse', '%'.$Adadresse.'%');
+            $interup = true;
         }
         if($aDcommune != "**"){
-            $params += array("a.commune" => $aDcommune);
+            $requete->andwhere('a.commune like :aDcommune')
+                ->setParameter('aDcommune', '%'.$aDcommune.'%');
+            $interup = true;
         }
         if($aDcadastre != "**"){
-            $params += array("a.section_cadastrale" => $aDcadastre);
+            $requete->andwhere('a.section_cadastrale like :aDcadastre')
+                ->setParameter('aDcadastre', '%'.$aDcadastre.'%');
+            $interup = true;
         }
         if($efFiltre != "**"){
-            $params += array("ef_etudes" => "not null");
+            $requete->andwhere('r.EF_etudes is not :aDcadastre')
+                ->setParameter('null', 'null');
+            $interup = true;
         }
         if($ednFiltre != "**"){
-            $params += array("edn" => "not null");
+            $requete->andwhere('r.EDN is not :aDcadastre')
+                ->setParameter('null', 'null');
+            $interup = true;
         }
-
-        if(count($params) == 0 && count($eFiltres) == 0 && count($dateCon) == 0) {
+        if(!$interup) {
             return $this->redirectToRoute('rdv.index');
         }
         $pagination = $paginator->paginate(
-            $rendezVousRepository->paginationQueryComplex($params, $dateCon, $eFiltres)->getResult(),
+            $requete->getQuery(),
             $request->query->get('page', 1),
             20
         );

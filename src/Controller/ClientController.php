@@ -125,7 +125,8 @@ class ClientController extends AbstractController
         $pagination = $paginator->paginate(
             $requete->getQuery(),
             $request->query->get('page', 1),
-            20
+            20,
+            array('wrap-queries'=>true)
         );
 
         return $this->render('client/index.html.twig', [
