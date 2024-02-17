@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\RendezVous;
+use App\Form\RendezVousType;
 use App\Repository\RendezVousRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -174,6 +175,28 @@ class RendezVousController extends AbstractController
             'aDcadastre' => $aDcadastre,
             'efFiltre' => $efFiltre,
             'ednFiltre' => $ednFiltre
+        ]);
+    }
+
+    #[Route('/rdv/ajout/new', name: 'rdv.ajout', methods: ['GET', 'POST'])]
+    public function ajout(RendezVousRepository $rendezVousRepository, Request $request): Response
+    {
+        $rendez_vous = new RendezVous();
+        $formRdv = $this->createForm(RendezVousType::class, $rendez_vous);
+
+        $formRdv->handleRequest($request);
+        if ($formRdv->isSubmitted() && $formRdv->isValid()){
+            $rendezVousRepository->add($rendez_vous, true);
+            $this->addFlash(
+                'success',
+                'Ajout du rendez-vous ' . $rendez_vous->getNumDossier() . " prise en compte"
+            );
+            return $this->redirectToRoute('rdv.index');
+        }
+
+        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+            'rendez_vous' => $rendez_vous,
+            'formRdv' => $formRdv->createView()
         ]);
     }
 

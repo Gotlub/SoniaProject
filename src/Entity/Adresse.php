@@ -50,6 +50,11 @@ class Adresse
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->adresseVisite . " " . $this->commune . " " . $this->cp;
+    }
+
     public function getProchaineVisite(): ?\DateTimeInterface
     {
         return $this->prochaine_visite;
