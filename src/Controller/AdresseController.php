@@ -87,8 +87,8 @@ class AdresseController extends AbstractController
             ->setParameter('cpF', '%'.$cpF.'%');
             $interup = true;
         }else{
-            $requete->where('a.cp like :cp6')
-            ->setParameter('cp6', '%6%');
+            $requete ->where('1 = :triche')
+            ->setParameter('triche', 1);
         }
         if($dateProDebF != "**" ){
             $requete->andwhere('a.prochaine_visite >= :datePro')
