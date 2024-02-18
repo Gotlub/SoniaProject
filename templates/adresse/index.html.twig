@@ -13,6 +13,16 @@
     {% if section_CF|default(null) %}{% endif %}
     {% if dernierClientF|default(null) %}{% endif %}
     {% if nbControleF|default(null) %}{% endif %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('alert') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container-fluid">
         <div class="row">
             <h1>Adresse index</h1>
@@ -97,12 +107,12 @@
                 {% for adresseEntite in pagination %}
                     <tr>
                         <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ (adresseEntite.prochaineVisite == null ) ? 'Non renseigné ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</a></td>
-                        <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ (adresseEntite.dernierRdv.dateControle == null ) ? 'Non renseigné ' : adresseEntite.dernierRdv.dateControle|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ (adresseEntite.dernierRdv == null ) ? ' ' : adresseEntite.dernierRdv.dateControle|date('d/m/Y') }}</a></td>
                         <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ adresseEntite.adresseVisite }}</a></td>
                         <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ adresseEntite.cp }}</a></td>
                         <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ adresseEntite.commune }}</a></td>
                         <td><a href="{{ path('adresse.showone', { 'id': adresseEntite.id }) }}" class="link-white">{{ adresseEntite.sectionCadastrale }}</a></td>
-                        <td><a href="{{ path('client.showone', { 'id': adresseEntite.dernierRdv.client.id }) }}" class="link-white">{{ adresseEntite.dernierRdv.Client.nom  ~ ' ' ~ adresseEntite.dernierRdv.Client.prenom }}</a></td>
+                        <td><a href="{{ (adresseEntite.dernierRdv == null ) ? '#' : (adresseEntite.dernierRdv.client == null )? "#" : path('client.showone', { 'id': adresseEntite.dernierRdv.client.id }) }}" class="link-white">{{ (adresseEntite.dernierRdv == null ) ? '' : (adresseEntite.dernierRdv.client == null )? "" : adresseEntite.dernierRdv.Client.nom  ~ ' ' ~ adresseEntite.dernierRdv.Client.prenom }}</a></td>
                         <td>
                             <h5 class="text-center">
                                 {{ adresseEntite.RendezVous|length}} {{ (adresseEntite.RendezVous|length) > 1 ? 'visites' : 'visite' }}

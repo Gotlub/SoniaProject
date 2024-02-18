@@ -34,10 +34,11 @@ class Adresse
     #[ORM\Column(length: 2000, nullable: true)]
     private ?string $ancienne_adresse = null;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: RendezVous::class)]
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: RendezVous::class, cascade : ['detach'])]
     private Collection $rendez_vous;
 
-    #[ORM\OneToOne ( cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne ( )]
+    #[ORM\JoinColumn(nullable: true)]
     private ?RendezVous $dernier_rdv = null;
 
     public function __construct()

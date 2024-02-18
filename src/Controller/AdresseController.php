@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
+use App\Form\AdresseType;
 use App\Repository\AdresseRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdresseController extends AbstractController
 {
@@ -80,8 +81,8 @@ class AdresseController extends AbstractController
         $interup = false;
         $requete =  $adresseRepository->createQueryBuilder('a')
             ->leftjoin('a.rendez_vous', 'r')
-            ->join('a.dernier_rdv', 'd')
-            ->join('d.client', 'c');
+            ->leftjoin('a.dernier_rdv', 'd')
+            ->leftjoin('d.client', 'c');
         if($cpF != "**"){
             $requete->where('a.cp like :cpF')
             ->setParameter('cpF', '%'.$cpF.'%');
@@ -152,7 +153,6 @@ class AdresseController extends AbstractController
             array('wrap-queries'=>true)
             
         );
-        //dd($pagination);
         return $this->render('adresse/index.html.twig', [
             'pagination' => $pagination,
             'dateProDebF' => $dateProDebF,
@@ -166,5 +166,71 @@ class AdresseController extends AbstractController
             'dernierClientF' => $dernierClientF,
             'nbControleF' => $nbControleF
         ]);
+    }
+
+    #[Route('/adresse/form/new', name: 'adresse.ajout', methods: ['GET', 'POST'])]
+    public function ajout(AdresseRepository $adresseRepository, Request $request): Response
+    {
+        $adresse = new Adresse();
+        $formAdresse = $this->createForm(AdresseType::class, $adresse);
+
+        $formAdresse->handleRequest($request);
+        if ($formAdresse->isSubmitted() && $formAdresse->isValid()){
+            $adresseRepository->add($adresse, true);
+            $this->addFlash(
+                'success',
+                "Ajout de l'adresse " . $adresse->getAdresseVisite() . " " . $adresse->getCommune() . " prise en compte"
+            );
+            return $this->render('adresse/showone.html.twig', [
+                'adresseEntite' => $adresse
+            ]);
+        }
+
+        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+            'adresse' => $adresse,
+            'formAdresse' => $formAdresse->createView()
+        ]);
+    }
+
+    #[Route('/adresse/form/edit/{id}', name: 'adresse.edit', methods: ['GET', 'POST'])]
+    public function edit(Adresse $adresse, AdresseRepository $adresseRepository, Request $request): Response
+    {
+        $formAdresse = $this->createForm(AdresseType::class, $adresse);
+
+        $formAdresse->handleRequest($request);
+        if($formAdresse->isSubmitted() && $formAdresse->isValid()){
+            $adresseRepository->add($adresse, true);
+            $this->addFlash(
+                'success',
+                "Modification de l'adresse " . $adresse->getAdresseVisite() . ' ' . $adresse->getCommune() . ' prise en compte');
+                return $this->render('adresse/showone.html.twig', [
+                    'adresseEntite' => $adresse
+                ]);
+        }
+
+        return $this->render('adresse/adresse.form.html.twig', [
+            'adresse' => $adresse,
+            'formAdresse' => $formAdresse->createView()
+        ]);
+    }
+
+    #[Route('/adresse/form/suppr/{id}', name: 'adresse.suppr', methods: ['GET', 'POST'])]
+    public function suppr(Adresse $adresse, AdresseRepository $adresseRepository): Response
+    {   
+        if ($adresse->getRendezVous()->count() > 0){
+            $this->addFlash(
+                'alert',
+                "Suppresion de l'adresse " . $adresse->getAdresseVisite() . ' ' . $adresse->getCommune() . ' impossible tant que des rendez-vous lui sont ratachée'
+            );
+            return $this->render('adresse/showone.html.twig', [
+                'adresseEntite' => $adresse
+            ]);
+        }
+        $adresseRepository->remove($adresse, true);
+        $this->addFlash(
+            'success',
+            "Suppresion de l'adresse " . $adresse->getAdresseVisite() . ' ' . $adresse->getCommune() . ' prise en compte'
+        );
+        return $this->redirectToRoute('rdv.index');
     }
 }

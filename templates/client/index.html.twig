@@ -11,6 +11,16 @@
     {% if dernierRdvAdresseF|default(null) %}{% endif %}
     {% if dernierRdvCommuneF|default(null) %}{% endif %}
     {% if nbRdvF|default(null) %}{% endif %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('alert') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container-fluid">
         <div class="row">
             <h1>Client index</h1>
@@ -84,12 +94,12 @@
                 <tbody>
                 {% for client in pagination %}
                     <tr>
-                        <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ (client.dernierRdv.dateControle == null ) ? 'Non renseigné ' : client.dernierRdv.dateControle|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ (client.dernierRdv == null ) ? '#' : path('client.showone', { 'id': client.id }) }}" class="link-white">{{ (client.dernierRdv == null ) ? 'Non renseigné ' : client.dernierRdv.dateControle|date('d/m/Y') }}</a></td>
                         <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.nom ~ ' ' ~  client.prenom }}</a></td>
                         <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.mail }}</a></td>
                         <td><a href="{{ path('client.showone', { 'id': client.id }) }}" class="link-white">{{ client.tel }}</a></td>
-                        <td><a href="{{ path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{ client.dernierRdv.Adresse.adresseVisite }}</a></td>
-                        <td><a href="{{ path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{ client.dernierRdv.Adresse.commune ~ ' ' ~  client.dernierRdv.Adresse.cp}}</a></td>
+                        <td><a href=" {{ (client.dernierRdv == null ) ? '#'  :  path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{  (client.dernierRdv == null ) ? " " : client.dernierRdv.Adresse.adresseVisite }}</a></td>
+                        <td><a href="{{ (client.dernierRdv == null ) ? '#'  : path('adresse.showone', { 'id': client.dernierRdv.id }) }}" class="link-white">{{ (client.dernierRdv == null ) ? " " : client.dernierRdv.Adresse.commune ~ ' ' ~  client.dernierRdv.Adresse.cp }}</a></td>
                         <td>
                             <h5 class="text-center">
                                 {{ client.RendezVous|length}} {{ (client.RendezVous|length) > 1 ? 'visites' : 'visite' }}

@@ -58,11 +58,11 @@ class RendezVous
     #[ORM\Column(length: 255, nullable : true)]
     private ?string $type_RPQS = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rendezVous')]
+    #[ORM\ManyToOne(inversedBy: 'rendezVous', cascade : ['detach'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Client $client = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rendez_vous')]
+    #[ORM\ManyToOne(inversedBy: 'rendez_vous', cascade : ['detach'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Adresse $adresse = null;
 

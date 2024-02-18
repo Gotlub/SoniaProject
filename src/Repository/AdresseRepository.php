@@ -21,12 +21,30 @@ class AdresseRepository extends ServiceEntityRepository
         parent::__construct($registry, Adresse::class);
     }
 
+    public function add(Adresse $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Adresse $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     public function paginationQuery()
     {
         return $this->createQueryBuilder('a')
             ->leftjoin('a.rendez_vous', 'r')
-            ->join('a.dernier_rdv', 'd')
-            ->join('d.client', 'c')
+            ->leftjoin('a.dernier_rdv', 'd')
+            ->leftjoin('d.client', 'c')
             ->groupBy('a.id')
             ->orderBy('a.prochaine_visite', 'DESC')
             ->getQuery()

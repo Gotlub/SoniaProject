@@ -18,6 +18,17 @@
     <div class="container-fluid">
         <div class="row">
             <h1>Rdv index</h1>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('alert') %}
+                <div class="alert alert-warning mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="container mt-4">
             <table style="width: 100;" class="table table-striped table-condensed">
                 <thead>
                     <tr>
@@ -111,11 +122,11 @@
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.statusDossier }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.typeControle }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.numDossier }}</a></td>
-                        <td><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</a></td>
-                        <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite }}</a></td>
-                        <td>{{ rendezVous.Adresse.Commune ~ ' ' ~ rendezVous.Adresse.cp}}</td>
-                        <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
-                        <td>{{ (rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</a></td>
+                        <td><a href="{{(rendezVous.client == null ) ? '#' : path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ (rendezVous.client == null ) ? '' : rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</a></td>
+                        <td><a href="{{ (rendezVous.adresse == null ) ? '#' : path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{  (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.adresseVisite }}</a></td>
+                        <td>{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.Commune ~ ' ' ~ rendezVous.Adresse.cp}}</td>
+                        <td>{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.sectionCadastrale }}</td>
+                        <td>{{ (rendezVous.adresse == null ) ? '' :  (rendezVous.Adresse.prochaineVisite == null )? '' : rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</a></td>
                         <td></td>
                         
                     </tr>

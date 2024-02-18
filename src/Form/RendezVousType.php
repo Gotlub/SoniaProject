@@ -49,7 +49,6 @@ class RendezVousType extends AbstractType
                         ->orderBy('c.nom', 'ASC');
                 },
                 'required' => false,
-                'choice_label'=>'nom',
                 'placeholder' => 'client',
                 'autocomplete'=>true
             ])

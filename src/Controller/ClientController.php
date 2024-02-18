@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,8 +74,8 @@ class ClientController extends AbstractController
         $interup = false;
         $requete =  $clientRepository->createQueryBuilder('c')
             ->leftjoin('c.rendezVous', 'r')
-            ->join('c.dernier_rdv', 'd')
-            ->join('d.adresse', 'a')
+            ->leftjoin('c.dernier_rdv', 'd')
+            ->leftjoin('d.adresse', 'a')
             ->where('1 = :triche')
             ->setParameter('triche', 1);
         if($dRdvDateDebF != "**" ){
@@ -140,5 +141,71 @@ class ClientController extends AbstractController
             'dernierRdvCommuneF' => $dernierRdvCommuneF,
             'nbRdvF' => $nbRdvF
         ]);
+    }
+
+    #[Route('/adresse/form/new', name: 'adresse.ajout', methods: ['GET', 'POST'])]
+    public function ajout(ClientRepository $clientRepository, Request $request): Response
+    {
+        $client = new Client();
+        $formClient = $this->createForm(ClientType::class, $client);
+
+        $formClient->handleRequest($request);
+        if ($formClient->isSubmitted() && $formClient->isValid()){
+            $clientRepository->add($client, true);
+            $this->addFlash(
+                'success',
+                "Ajout du client " . $client->getNom() . " " . $client->getPrenom() . " prise en compte"
+            );
+            return $this->render('client/showone.html.twig', [
+                'client' => $client
+            ]);
+        }
+
+        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+            'client' => $client,
+            'formClient' => $formClient->createView()
+        ]);
+    }
+
+    #[Route('/client/form/edit/{id}', name: 'client.edit', methods: ['GET', 'POST'])]
+    public function edit(Client $client, ClientRepository $clientRepository, Request $request): Response
+    {
+        $formClient = $this->createForm(ClientType::class, $client);
+
+        $formClient->handleRequest($request);
+        if($formClient->isSubmitted() && $formClient->isValid()){
+            $clientRepository->add($client, true);
+            $this->addFlash(
+                'success',
+                "Modification du client " . $client->getNom() . " " . $client->getPrenom() . " prise en compte");
+                return $this->render('client/showone.html.twig', [
+                    'client' => $client
+                ]);
+        }
+
+        return $this->render('client/client.form.html.twig', [
+            'client' => $client,
+            'formClient' => $formClient->createView()
+        ]);
+    }
+
+    #[Route('/client/form/suppr/{id}', name: 'client.suppr', methods: ['GET', 'POST'])]
+    public function suppr(Client $client, ClientRepository $clientRepository): Response
+    {   
+        if ($client->getRendezVous()->count() > 0){
+            $this->addFlash(
+                'alert',
+                "Suppresion du client " . $client->getNom() . " " . $client->getPrenom() . ' impossible tant que des rendez-vous lui sont ratachée'
+            );
+            return $this->render('client/showone.html.twig', [
+                'client' => $client
+            ]);
+        }
+        $clientRepository->remove($client, true);
+        $this->addFlash(
+            'success',
+            "Suppresion du client " . $client->getNom() . " " . $client->getPrenom() . ' prise en compte'
+        );
+        return $this->redirectToRoute('client.index');
     }
 }

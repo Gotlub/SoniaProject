@@ -30,7 +30,7 @@ class Client
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $commune_facturation = null;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: RendezVous::class)]
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: RendezVous::class, cascade : ['detach'])]
     private Collection $rendezVous;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -45,7 +45,8 @@ class Client
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cp_client = null;
 
-    #[ORM\OneToOne( cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne( )]
+    #[ORM\JoinColumn(nullable: true)]
     private ?RendezVous $dernier_rdv = null;
 
     public function __construct()
@@ -53,14 +54,14 @@ class Client
         $this->rendezVous = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->nom . " " . $this->prenom ;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->nom . " " . $this->prenom;
     }
 
     public function getNom(): ?string

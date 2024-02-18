@@ -32,7 +32,6 @@ class RendezVousController extends AbstractController
     #[Route('/rdv/{id}', name: 'rdv.showone', methods: ['GET', 'POST'])]
     public function show(RendezVous $rendezVous): Response
     {
-       //dd($rendezVous);
         return $this->render('rendez_vous/showone.html.twig', [
             'rendezVous' => $rendezVous
         ]);
@@ -191,7 +190,9 @@ class RendezVousController extends AbstractController
                 'success',
                 'Ajout du rendez-vous ' . $rendez_vous->getNumDossier() . " prise en compte"
             );
-            return $this->redirectToRoute('rdv.index');
+            return $this->render('rendez_vous/showone.html.twig', [
+                'rendezVous' => $rendez_vous
+            ]);
         }
 
         return $this->render('rendez_vous/rendez_vous.form.html.twig', [
@@ -200,7 +201,7 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/rdv/form/edit/{id}', name: 'rdv.ajout', methods: ['GET', 'POST'])]
+    #[Route('/rdv/form/edit/{id}', name: 'rdv.edit', methods: ['GET', 'POST'])]
     public function edit(RendezVous $rendezVous, RendezVousRepository $rendezVousRepository, Request $request): Response
     {
         $formRdv = $this->createForm(RendezVousType::class, $rendezVous);
@@ -211,13 +212,26 @@ class RendezVousController extends AbstractController
             $this->addFlash(
                 'success',
                 'Modification du rendez-vous ' . $rendezVous->getNumDossier() . ' prise en compte');
-            return $this->redirectToRoute('rdv.index');
+                return $this->render('rendez_vous/showone.html.twig', [
+                    'rendezVous' => $rendezVous
+                ]);
         }
 
         return $this->render('rendez_vous/rendez_vous.form.html.twig', [
             'rendez_vous' => $rendezVous,
             'formRdv' => $formRdv->createView()
         ]);
+    }
+
+    #[Route('/rdv/form/suppr/{id}', name: 'rdv.suppr', methods: ['GET', 'POST'])]
+    public function suppr(RendezVous $rendezVous, RendezVousRepository $rendezVousRepositor): Response
+    {   
+        $rendezVousRepositor->remove($rendezVous, true);
+        $this->addFlash(
+            'alert',
+            'Suppresion du rendez-vous ' . $rendezVous->getNumDossier() . ' prise en compte'
+        );
+        return $this->redirectToRoute('rdv.index');
     }
 
 }

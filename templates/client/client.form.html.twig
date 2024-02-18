@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container mt-4">
+    {% if client.id == null %}
+        <h1>Creation Client</h1>
+    {% else %}
+        <h1>Modification du client : <strong>{{ client.nom ~ ' ' ~ client.prenom }}</strong></h1>
+    {% endif %}
+    <hr class="my-4">
+        <div class="row">
+            {{ form_start(formClient) }}
+            {{ form_end(formClient) }}
+        </div>
+            {% if client.id != null %}
+                <hr class="my-4">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{{ path('client.edit', { 'id': client.id }) }}" class="btn btn-warning me-md-2">
+                        Modifier
+                    </a>
+                    <a href="{{ path('client.suppr', { 'id': client.id }) }}" 
+                        class="btn btn-danger" 
+                        onclick="return confirm('Etes-vous sûr de vouloir supprimer le client : {{ client.nom ~ ' ' ~  client.prenom}} ?')">
+                        Supprimer
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -3,12 +3,23 @@
 {% block title %} {{rendezVous.dateControle|date('d/m/Y')}} {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('alert') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container mt-4">
         <h1>Rendez-vous n° dossier : {{rendezVous.numDossier}} </h1>
         <h3>Date du contrôle : {{rendezVous.dateControle|date('d/m/Y')}}</h3>
         <hr class="my-4">
         <p>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</p>
         <br/>
+        {% if rendezVous.client != null %}
         <strong><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white"><p>Client RDV :</p></a></strong>
         <div class="jumbotron">
              <table class="table">
@@ -47,40 +58,51 @@
                     </tr>
                 </tbody>
             </table>
+            {% endif %}
             <br/>
-            <strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white"><p>Adresse RDV:</p></a></strong>
-             <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Prochaine visite</th>
-                        <td>{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th><strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">Adresse visite</a></strong></th>
-                        <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</a></td>
-                    </tr>
-                    <tr>
-                        <th>Section cadastrale</th>
-                        <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
-                    </tr>
-                    <tr>
-                        <th>Ancien nom de la rue</th>
-                        <td>{{ rendezVous.Adresse.ancienneAdresse }}</td>
-                    </tr>
-                     <tr>
-                        <th>Derniere visite</th>
-                        <td>{{ rendezVous.Adresse.dernierRdv.dateControle|date('d/m/Y')}}</td>
-                    </tr>
-                     <tr>
-                        <th>Client a la derniere visite</th>
-                        <td>{{ rendezVous.Adresse.dernierRdv.Client.nom ~ ' ' ~ rendezVous.Adresse.dernierRdv.Client.prenom }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            {% if rendezVous.adresse != null %}
+                <strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white"><p>Adresse RDV:</p></a></strong>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Prochaine visite</th>
+                            <td>{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">Adresse visite</a></strong></th>
+                            <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Section cadastrale</th>
+                            <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ancien nom de la rue</th>
+                            <td>{{ rendezVous.Adresse.ancienneAdresse }}</td>
+                        </tr>
+                        {% if rendezVous.adresse.dernierRdv != null %}
+                            <tr>
+                                <th>Derniere visite</th>
+                                <td>{{ rendezVous.Adresse.dernierRdv.dateControle|date('d/m/Y')}}</td>
+                            </tr>
+                            {% if rendezVous.adresse.dernierRdv.Client != null %}
+                                <tr>
+                                    <th>Client a la derniere visite</th>
+                                    <td>{{ rendezVous.Adresse.dernierRdv.Client.nom ~ ' ' ~ rendezVous.Adresse.dernierRdv.Client.prenom }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            {% endif %}
             <br/>
             <p>Rendez-vous :</p>
             <table class="table">
                 <tbody>
+                    <tr>
+                        <th>Date du contrôle</th>
+                        <td> {{(rendezVous.dateControle == null)? "" : rendezVous.dateControle|date('d/m/Y')}}</td>
+                    </tr>
                     <tr>
                         <th>Status facturation</th>
                         <td>{{ rendezVous.status }}</td>
@@ -139,6 +161,17 @@
                     </tr>
                 </tbody>
             </table>
+            <hr class="my-4">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="{{ path('rdv.edit', { 'id': rendezVous.id }) }}" class="btn btn-warning me-md-2">
+                    Modifier
+                </a>
+                <a href="{{ path('rdv.suppr', { 'id': rendezVous.id }) }}" 
+                    class="btn btn-danger" 
+                    onclick="return confirm('Etes-vous sûr de vouloir supprimer le rendez_vous n° {{ rendezVous.numDossier }} ?')">
+                    Supprimer
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
