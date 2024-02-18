@@ -1,10 +1,18 @@
 {% extends "base.html.twig" %}
 {% block body %}
+    <div class="container mt-4">
+    {% if rendez_vous.id == null %}
+        <h1>Creation de rendez-vous</h1>
+    {% else %}
+        <h1>Modification rendez-vous n° dossier : <strong>{{ rendez_vous.numDossier}}</strong></h1>
+    {% endif %}
+    <hr class="my-4">
         {{ form_start(formRdv) }}
             <div class="row">
             </div>
                 {{ form_end(formRdv) }}
                 {% if rendez_vous.id != null %}
+                    <hr class="my-4">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="" class="btn btn-warning me-md-2">
                             Annuler
@@ -18,4 +26,5 @@
                 {% endif %}
             </div>
         {{ form_end(formRdv) }}
-    {% endblock %}
+    </div>
+{% endblock %}

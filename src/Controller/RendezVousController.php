@@ -178,7 +178,7 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/rdv/ajout/new', name: 'rdv.ajout', methods: ['GET', 'POST'])]
+    #[Route('/rdv/form/new', name: 'rdv.ajout', methods: ['GET', 'POST'])]
     public function ajout(RendezVousRepository $rendezVousRepository, Request $request): Response
     {
         $rendez_vous = new RendezVous();
@@ -196,6 +196,26 @@ class RendezVousController extends AbstractController
 
         return $this->render('rendez_vous/rendez_vous.form.html.twig', [
             'rendez_vous' => $rendez_vous,
+            'formRdv' => $formRdv->createView()
+        ]);
+    }
+
+    #[Route('/rdv/form/edit/{id}', name: 'rdv.ajout', methods: ['GET', 'POST'])]
+    public function edit(RendezVous $rendezVous, RendezVousRepository $rendezVousRepository, Request $request): Response
+    {
+        $formRdv = $this->createForm(RendezVousType::class, $rendezVous);
+
+        $formRdv->handleRequest($request);
+        if($formRdv->isSubmitted() && $formRdv->isValid()){
+            $rendezVousRepository->add($rendezVous, true);
+            $this->addFlash(
+                'success',
+                'Modification du rendez-vous ' . $rendezVous->getNumDossier() . ' prise en compte');
+            return $this->redirectToRoute('rdv.index');
+        }
+
+        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+            'rendez_vous' => $rendezVous,
             'formRdv' => $formRdv->createView()
         ]);
     }
