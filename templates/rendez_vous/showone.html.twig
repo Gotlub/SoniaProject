@@ -29,33 +29,28 @@
                         <td><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ rendezVous.Client.nom ~ ' ' ~ rendezVous.Client.prenom}}</a></td>
                     </tr>
                     <tr>
-                        <th>Adresse Facturation</th>
-                        <td>{{ rendezVous.Client.adresseFacturation ~ ' , ' ~ rendezVous.Client.cpFacturation ~ ' ' ~ rendezVous.Client.communeFacturation }}</td>
+                        <th class="text-body">Mail</th>
+                        <td class="text-body">{{ rendezVous.Client.mail }}</td>
                     </tr>
                     <tr>
-                        <th>Mail</th>
-                        <td>{{ rendezVous.Client.mail }}</td>
+                        <th class="text-body">Tel</th>
+                        <td class="text-body">{{ rendezVous.Client.tel }}</td>
                     </tr>
                     <tr>
-                        <th>Tel</th>
-                        <td>{{ rendezVous.Client.tel }}</td>
+                        <th class="text-body">Tel</th>
+                        <td class="text-body">{{ rendezVous.Client.tel }}</td>
                     </tr>
+                    
                      <tr>
-                        <th>Adresse Contact</th>
-                        <td>{{ rendezVous.Client.adresseClient ~ '  ' ~  rendezVous.Client.cpClient}}</td>
+                        <th class="text-body">Dernière visite</th>
+                        <td class="text-body">{{ (rendezVous.Client.dernierRdv == null )? '' : rendezVous.Client.dernierRdv.dateControle|date('d/m/Y')}}</td>
                     </tr>
-                    <tr>
-                        <th>Tel</th>
-                        <td>{{ rendezVous.Client.tel }}</td>
-                    </tr>
-                     <tr>
-                        <th>Derniere visite</th>
-                        <td>{{ rendezVous.Client.dernierRdv.dateControle|date('d/m/Y')}}</td>
-                    </tr>
-                     <tr>
-                        <th>Derniere adresse visité</th>
-                        <td>{{ rendezVous.Client.dernierRdv.Adresse.adresseVisite ~ ' ' ~ rendezVous.Client.dernierRdv.Adresse.commune }}</td>
-                    </tr>
+                    {% if rendezVous.Client.dernierRdv != null and rendezVous.Client.dernierRdv.adresse != null %}
+                        <tr>
+                            <th class="text-body">Dernière adresse visitée</th>
+                            <td class="text-body">{{ rendezVous.Client.dernierRdv.Adresse.adresseVisite ~ ' ' ~ rendezVous.Client.dernierRdv.Adresse.commune }}</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
             {% endif %}
@@ -65,30 +60,30 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Prochaine visite</th>
-                            <td>{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
+                            <th class="text-body">Prochaine visite</th>
+                            <td class="text-body">{{(rendezVous.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</td>
                         </tr>
                         <tr>
-                            <th><strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">Adresse visite</a></strong></th>
-                            <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</a></td>
+                            <th ><strong><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">Adresse visite</a></strong></th>
+                            <td><a href="{{ path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ rendezVous.Adresse.numero ~ ' ' ~ rendezVous.Adresse.adresseVisite ~ ' , ' ~ rendezVous.Adresse.cp ~ ' ' ~ rendezVous.Adresse.commune }}</a></td>
                         </tr>
                         <tr>
-                            <th>Section cadastrale</th>
-                            <td>{{ rendezVous.Adresse.sectionCadastrale }}</td>
+                            <th class="text-body">Cadastre</th>
+                            <td class="text-body">{{ rendezVous.Adresse.sectionCadastrale }}</td>
                         </tr>
                         <tr>
-                            <th>Ancien nom de la rue</th>
-                            <td>{{ rendezVous.Adresse.ancienneAdresse }}</td>
+                            <th class="text-body">Ancien nom de la rue</th>
+                            <td class="text-body">{{ rendezVous.Adresse.ancienneAdresse }}</td>
                         </tr>
                         {% if rendezVous.adresse.dernierRdv != null %}
                             <tr>
-                                <th>Derniere visite</th>
-                                <td>{{ rendezVous.Adresse.dernierRdv.dateControle|date('d/m/Y')}}</td>
+                                <th class="text-body">Derniere visite</th>
+                                <td class="text-body">{{ rendezVous.Adresse.dernierRdv.dateControle|date('d/m/Y')}}</td>
                             </tr>
                             {% if rendezVous.adresse.dernierRdv.Client != null %}
                                 <tr>
-                                    <th>Client a la derniere visite</th>
-                                    <td>{{ rendezVous.Adresse.dernierRdv.Client.nom ~ ' ' ~ rendezVous.Adresse.dernierRdv.Client.prenom }}</td>
+                                    <th class="text-body">Client a la derniere visite</th>
+                                    <td class="text-body">{{ rendezVous.Adresse.dernierRdv.Client.nom ~ ' ' ~ rendezVous.Adresse.dernierRdv.Client.prenom }}</td>
                                 </tr>
                             {% endif %}
                         {% endif %}
@@ -96,68 +91,64 @@
                 </table>
             {% endif %}
             <br/>
-            <p>Rendez-vous :</p>
+            <p class="text-primary"><strong>Rendez-vous :</strong></p>
             <table class="table">
                 <tbody>
                     <tr>
-                        <th>Date du contrôle</th>
-                        <td> {{(rendezVous.dateControle == null)? "" : rendezVous.dateControle|date('d/m/Y')}}</td>
+                        <th class="text-body">Date du contrôle</th>
+                        <td class="text-body"> {{(rendezVous.dateControle == null)? "" : rendezVous.dateControle|date('d/m/Y')}}</td>
                     </tr>
                     <tr>
-                        <th>Status facturation</th>
-                        <td>{{ rendezVous.status }}</td>
+                        <th class="text-body">Facturation</th>
+                        <td class="text-body">{{ rendezVous.facturation }}</td>
                     </tr>
                     <tr>
-                        <th>Facturation</th>
-                        <td>{{ rendezVous.facturation }}</td>
+                        <th class="text-body">Date facturation</th>
+                        <td class="text-body">{{ rendezVous.dateFacturation }}</td>
                     </tr>
                     <tr>
-                        <th>Date facturation</th>
-                        <td>{{ rendezVous.dateFacturation }}</td>
+                        <th class="text-body">Commentaire</th>
+                        <td class="text-body">{{ rendezVous.commentaire }}</td>
                     </tr>
                     <tr>
-                        <th>Commentaire</th>
-                        <td>{{ rendezVous.commentaire }}</td>
+                        <th class="text-body">Type contrôle</th>
+                        <td class="text-body">{{ rendezVous.typeControle }}</td>
                     </tr>
                     <tr>
-                        <th>Status dossier</th>
-                        <td>{{ rendezVous.statusDossier }}</td>
+                        <th class="text-body">Type traitement</th>
+                        <td class="text-body">{{ rendezVous.typeTraitement }}</td>
                     </tr>
                     <tr>
-                        <th>Type contrôle</th>
-                        <td>{{ rendezVous.typeControle }}</td>
+                        <th class="text-body">Type installation</th>
+                        <td class="text-body">{{ rendezVous.typeInstallation }}</td>
                     </tr>
                     <tr>
-                        <th>Type traitement</th>
-                        <td>{{ rendezVous.typeTraitement }}</td>
+                        <th class="text-body">Rejet / infiltration</th>
+                        <td class="text-body">{{ rendezVous.rejetInf }}</td>
                     </tr>
                     <tr>
-                        <th>Type installation</th>
-                        <td>{{ rendezVous.typeInstallation }}</td>
+                        <th class="text-body">Conformite</th>
+                        <td class="text-body">{{ rendezVous.conformite }}</td>
                     </tr>
                     <tr>
-                        <th>Rejet / infiltration</th>
-                        <td>{{ rendezVous.rejetInf }}</td>
+                        <th class="text-body">Impact</th>
+                        <td class="text-body">{{ rendezVous.impact }}</td>
                     </tr>
                     <tr>
-                        <th>Conformite</th>
-                        <td>{{ rendezVous.conformite }}</td>
+                        <th class="text-body">Rpqs</th>
+                        <td class="text-body">{{ rendezVous.typeRpqs }}</td>
                     </tr>
                     <tr>
-                        <th>Impact</th>
-                        <td>{{ rendezVous.impact }}</td>
+                        <th class="text-body">Adresse de facturation</th>
+                        <td class="text-body">{{ rendezVous.adresseFacturation }}</td>
                     </tr>
                     <tr>
-                        <th>Rpqs</th>
-                        <td>{{ rendezVous.typeRpqs }}</td>
+                        <th class="text-body">Commune de facturation</th>
+                        <td class="text-body">{{ rendezVous.communeFacturation ~ ' ' ~  rendezVous.cpFacturation }}</td>
                     </tr>
                     <tr>
-                        <th>EF etudes</th>
-                        <td>{{ (rendezVous.efEtudes is same as(null)) ? 'Non' : 'EF etudes' }}</td>
-                    </tr>
-                    <tr>
-                        <th>EDN </th>
-                        <td>{{ (rendezVous.edn  is same as(null)) ? 'Non' : 'EDN' }}</td>
+                        <th class="text-body">Propriaitaire</th>
+                        <td class="text-body">{{ rendezVous.nomPropriaitaire ~ ' ' ~  rendezVous.prenomPropriaitaire}}</td>
                     </tr>
                 </tbody>
             </table>

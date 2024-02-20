@@ -22,40 +22,32 @@
              <table class="table">
                 <tbody>
                     <tr>
-                        <th>Nom : </th>
-                        <td>{{ client.nom  }}</td>
+                        <th class="text-body">Nom : </th>
+                        <td class="text-body">{{ client.nom  }}</td>
                     </tr>
                     <tr>
-                        <th>Prénom :</th>
-                        <td>{{ client.prenom }}</td>
+                        <th class="text-body">Prénom :</th>
+                        <td class="text-body">{{ client.prenom }}</td>
                     </tr>
                     <tr>
-                        <th>Adresse de facturation :</th>
-                        <td>{{ client.adresseFacturation }}</td>
+                        <th class="text-body">E-mail client :</th>
+                        <td class="text-body">{{ client.mail }}</td>
                     </tr>
                     <tr>
-                        <th>Code postal de facturation :</th>
-                        <td>{{ client.communeFacturation }}</td>
+                        <th class="text-body">Téléphone client :</th>
+                        <td class="text-body">{{ client.tel }}</td>
                     </tr>
                     <tr>
-                        <th>E-mail client :</th>
-                        <td>{{ client.mail }}</td>
+                        <th class="text-body">Adresse client :</th>
+                        <td class="text-body">{{ client.adresseClient }}</td>
                     </tr>
                     <tr>
-                        <th>Téléphone client :</th>
-                        <td>{{ client.tel }}</td>
+                        <th class="text-body">Code postal client :</th>
+                        <td class="text-body">{{ client.cpClient  }}</td>
                     </tr>
                     <tr>
-                        <th>Adresse client :</th>
-                        <td>{{ client.adresseClient }}</td>
-                    </tr>
-                    <tr>
-                        <th>Code postal client :</th>
-                        <td>{{ client.cpClient  }}</td>
-                    </tr>
-                    <tr>
-                        <th>Date du dernier rdv</th>
-                        <td>{{ (client.dernierRdv == null ) ? 'Non renseigné ' : client.dernierRdv.dateControle|date('d/m/y') }}</td>
+                        <th class="text-body">Date du dernier rdv</th>
+                        <td class="text-body">{{ (client.dernierRdv == null ) ? 'Non renseigné ' : client.dernierRdv.dateControle|date('d/m/y') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -76,40 +68,40 @@
             <table style="width: 100;" class="table table-striped table-condensed">
                 <thead>
                     <tr>
-                        <th class="text-left align-top" scope="col">Date de contrôle
+                        <th class="text-left align-top text-body" scope="col">Date de contrôle
                         </th>
-                        <th  class="text-left align-top" scope="col">Status Facturation
+                        <th class="text-left align-top text-body" scope="col">Type du contrôle
                         </th>
-                        <th  class="text-left align-top" scope="col">Status Dossier
+                        <th class="text-left align-top text-body" scope="col">N°Dossier
                         </th>
-                        <th class="text-left align-top" scope="col">Type du contrôle
+                        <th  class="text-left align-top text-body" scope="col">Client
                         </th>
-                        <th class="text-left align-top" scope="col">N°Dossier
+                        <th  class="text-left align-top text-body" scope="col">Adresse
                         </th>
-                        <th  class="text-left align-top" scope="col">Client
+                        <th class="text-left align-top text-body" scope="col">Commune
                         </th>
-                        <th  class="text-left align-top" scope="col">Adresse
+                        <th class="text-left align-top text-body" scope="col">Cadastre
                         </th>
-                        <th class="text-left align-top" scope="col">Commune
+                        <th class="text-left align-top text-body" scope="col">Propriaitaire
                         </th>
-                        <th class="text-left align-top" scope="col">Cadastre S
+                        <th class="text-left align-top text-body" scope="col">Adresse de facturation
                         </th>
-                        <th class="text-left align-top" scope="col">Prochaine visite</th>
+                        <th class="text-left align-top text-body" scope="col">Prochaine visite</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for rdv in client.rendezVous %}
+                {% for rdv in client.rendezVous|sort((a, b) => b.dateControle <=> a.dateControle ) %}
                     <tr>
                         <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ (rdv.dateControle == null ) ? '' : rdv.dateControle|date('d/m/Y') }}</a></td>
-                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.status }}</a></td>
-                        <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.statusDossier }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.typeControle }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rdv.id }) }}" class="link-white">{{ rdv.numDossier }}</a></td>
                         <td><a href="{{ (rdv.client == null ) ? '' : path('client.showone', { 'id': rdv.client.id }) }}" class="link-white">{{ (rdv.client == null ) ? " " : rdv.client.nom ~ ' ' ~ rdv.client.prenom }}</a></td>
-                        <td><a href="{{ (rdv.adresse == null ) ? '' : path('adresse.showone', { 'id': rdv.adresse.id }) }}" class="link-white">{{ (rdv.adresse == null ) ? " " : rdv.Adresse.adresseVisite ~ ' ' ~ rdv.Adresse.cp}}</a></td>
-                        <td>{{ rdv.Adresse.commune }}</td>
-                        <td>{{ rdv.Adresse.sectionCadastrale }}</td>
-                        <td>{{ (rdv.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rdv.Adresse.prochaineVisite|date('d/m/Y') }}</td>
+                        <td><a href="{{ (rdv.adresse == null ) ? '' : path('adresse.showone', { 'id': rdv.adresse.id }) }}" class="link-white">{{ (rdv.adresse == null ) ? " " : rdv.Adresse.numero ~ ' ' ~rdv.Adresse.adresseVisite ~ ' ' ~ rdv.Adresse.cp}}</a></td>
+                        <td class="text-body">{{ rdv.Adresse.commune }}</td>
+                        <td class="text-body">{{ rdv.Adresse.sectionCadastrale }}</td>
+                        <td class="text-body">{{ rdv.nomPropriaitaire ~ ' ' ~ rdv.prenomPropriaitaire}}</td>
+                        <td class="text-body">{{ rdv.adresseFacturation ~ ' ' ~ rdv.communeFacturation }}</td>
+                        <td class="text-body">{{ (rdv.Adresse.prochaineVisite == null ) ? 'Non renseigné ' :  rdv.Adresse.prochaineVisite|date('d/m/Y') }}</td>
                         <td></td>
                     </tr>
                 {% else %}

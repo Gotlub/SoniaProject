@@ -43,10 +43,6 @@ class RendezVousController extends AbstractController
         $dateConDeb = ($dateConDeb == "") ? "**" : $dateConDeb;
         $dateConFin = $request->get("dateConFin");
         $dateConFin = ($dateConFin == "") ? "**" : $dateConFin;
-        $status = $request->get("status");
-        $status = ($status == "") ? "**" : $status;
-        $statusD = $request->get("statusD");
-        $statusD = ($statusD == "") ? "**" : $statusD;
         $typeCon = $request->get("typeCon");
         $typeCon = ($typeCon == "") ? "**" : $typeCon;
         $numDosier = $request->get("numDosier");
@@ -59,32 +55,30 @@ class RendezVousController extends AbstractController
         $aDcommune = ($aDcommune == "") ? "**" : $aDcommune;
         $aDcadastre = $request->get("aDcadastre");
         $aDcadastre = ($aDcadastre == "") ? "**" : $aDcadastre;
-        $efFiltre = $request->get("efFiltre");
-        $efFiltre = ($efFiltre == "") ? "**" : $efFiltre;
-        $ednFiltre = $request->get("ednFiltre");
-        $ednFiltre = ($ednFiltre == "") ? "**" : $ednFiltre;
+        $prorioNomF = $request->get("prorioNomF");
+        $prorioNomF = ($prorioNomF == "") ? "**" : $prorioNomF;
+        $prorioCommuneF = $request->get("prorioCommuneF");
+        $prorioCommuneF = ($prorioCommuneF == "") ? "**" : $prorioCommuneF;
 
         return $this->redirectToRoute('rdv.findallcontainReq', [
             'dateConDeb' => $dateConDeb,
             'dateConFin' => $dateConFin,
-            'status' => $status,
-            'statusD' => $statusD,
             'typeCon' => $typeCon,
             'numDosier' => $numDosier,
             'clientNom' => $clientNom,
             'Adadresse' => $Adadresse,
             'aDcommune' => $aDcommune,
             'aDcadastre' => $aDcadastre,
-            'efFiltre' => $efFiltre,
-            'ednFiltre' => $ednFiltre
+            'prorioNomF' => $prorioNomF,
+            'prorioCommuneF' => $prorioCommuneF
         ]);
     }
 
-    #[Route('/rdv/{dateConDeb}/{dateConFin}/{status}/{statusD}/{typeCon}/{numDosier}/{clientNom}/{Adadresse}/{aDcommune}/{aDcadastre}/{efFiltre}/{ednFiltre}', name: 'rdv.findallcontainReq', methods: ['GET'])]
+    #[Route('/rdv/{dateConDeb}/{dateConFin}/{typeCon}/{numDosier}/{clientNom}/{Adadresse}/{aDcommune}/{aDcadastre}/{prorioNomF}/{prorioCommuneF}/', name: 'rdv.findallcontainReq', methods: ['GET'])]
     public function findAllContainReq( RendezVousRepository $rendezVousRepository,
     Request $request, PaginatorInterface $paginator,
-    string $dateConDeb ,string  $dateConFin,string  $status,string $statusD,string $typeCon,string $numDosier,string $clientNom,
-    string $Adadresse, string $aDcommune, string $aDcadastre, string $efFiltre, string $ednFiltre): Response{
+    string $dateConDeb ,string  $dateConFin, string $typeCon, string $numDosier, string $clientNom,
+    string $Adadresse, string $aDcommune, string $aDcadastre, string $prorioNomF, string $prorioCommuneF): Response{
         $interup = false;
         $requete = $rendezVousRepository->createQueryBuilder('r')
                     ->join('r.client', 'c')
@@ -99,16 +93,6 @@ class RendezVousController extends AbstractController
         if($dateConFin != "**"){
             $requete->andwhere('r.date_controle <= :dateConFin')
                 ->setParameter('dateConFin', $dateConFin);
-            $interup = true;
-        }
-        if($status != "**"){
-            $requete->andwhere('r.status like :status')
-                ->setParameter('status', '%'.$status.'%');
-            $interup = true;
-        }
-        if($statusD != "**"){
-            $requete->andwhere('r.status_dossier like :statusD')
-                ->setParameter('statusD', '%'.$statusD.'%');
             $interup = true;
         }
         if($typeCon != "**"){
@@ -141,14 +125,14 @@ class RendezVousController extends AbstractController
                 ->setParameter('aDcadastre', '%'.$aDcadastre.'%');
             $interup = true;
         }
-        if($efFiltre != "**"){
-            $requete->andwhere('r.EF_etudes is not :aDcadastre')
-                ->setParameter('null', 'null');
+        if($prorioNomF != "**"){
+            $requete->andwhere('r.nom_propriaitaire like :prorioNomF')
+                ->setParameter('prorioNomF', '%'.$prorioNomF.'%');
             $interup = true;
         }
-        if($ednFiltre != "**"){
-            $requete->andwhere('r.EDN is not :aDcadastre')
-                ->setParameter('null', 'null');
+        if($prorioCommuneF != "**"){
+            $requete->andwhere('r.commune_facturation like :prorioCommuneF')
+                ->setParameter('prorioCommuneF', '%'.$prorioCommuneF.'%');
             $interup = true;
         }
         if(!$interup) {
@@ -164,16 +148,14 @@ class RendezVousController extends AbstractController
             'pagination' => $pagination,
             'dateConDeb' => $dateConDeb,
             'dateConFin' => $dateConFin,
-            'status' => $status,
-            'statusD' => $statusD,
             'typeCon' => $typeCon,
             'numDosier' => $numDosier,
             'clientNom' => $clientNom,
             'Adadresse' => $Adadresse,
             'aDcommune' => $aDcommune,
             'aDcadastre' => $aDcadastre,
-            'efFiltre' => $efFiltre,
-            'ednFiltre' => $ednFiltre
+            'prorioNomF' => $prorioNomF,
+            'prorioCommuneF' => $prorioCommuneF
         ]);
     }
 

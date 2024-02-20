@@ -44,10 +44,10 @@ class ClientController extends AbstractController
         $dRdvDateFinF = ($dRdvDateFinF == "") ? "**" : $dRdvDateFinF;
         $nomF = $request->get("nomF");
         $nomF = ($nomF == "") ? "**" : $nomF;
-        $mailF = $request->get("mailF");
-        $mailF = ($mailF == "") ? "**" : $mailF;
-        $telF = $request->get("telF");
-        $telF = ($telF == "") ? "**" : $telF;
+        $adresseFacF = $request->get("adresseFacF");
+        $adresseFacF = ($adresseFacF == "") ? "**" : $adresseFacF;
+        $communeFacF = $request->get("communeFacF");
+        $communeFacF = ($communeFacF == "") ? "**" : $communeFacF;
         $dernierRdvAdresseF = $request->get("dernierRdvAdresseF");
         $dernierRdvAdresseF = ($dernierRdvAdresseF == "") ? "**" : $dernierRdvAdresseF;
         $dernierRdvCommuneF = $request->get("dernierRdvCommuneF");
@@ -59,18 +59,18 @@ class ClientController extends AbstractController
             'dRdvDateDebF' => $dRdvDateDebF,
             'dRdvDateFinF' => $dRdvDateFinF,
             'nomF' => $nomF,
-            'mailF' => $mailF,
-            'telF' => $telF,
+            'adresseFacF' => $adresseFacF,
+            'communeFacF' => $communeFacF,
             'dernierRdvAdresseF' => $dernierRdvAdresseF,
             'dernierRdvCommuneF' => $dernierRdvCommuneF,
             'nbRdvF' => $nbRdvF
         ]);
     }
 
-    #[Route('/client/{dRdvDateDebF}/{dRdvDateFinF}/{nomF}/{mailF}/{telF}/{dernierRdvAdresseF}/{dernierRdvCommuneF}/{nbRdvF}', name: 'client.findallcontainReq', methods: ['GET'])]
+    #[Route('/client/{dRdvDateDebF}/{dRdvDateFinF}/{nomF}/{adresseFacF}/{communeFacF}/{dernierRdvAdresseF}/{dernierRdvCommuneF}/{nbRdvF}', name: 'client.findallcontainReq', methods: ['GET'])]
     public function findAllContainReq( ClientRepository $clientRepository,
     Request $request, PaginatorInterface $paginator,
-    string $dRdvDateDebF, string $dRdvDateFinF, string $nomF, string $mailF, string $telF, string $dernierRdvAdresseF, string $dernierRdvCommuneF, string $nbRdvF): Response{
+    string $dRdvDateDebF, string $dRdvDateFinF, string $nomF, string $adresseFacF, string $communeFacF, string $dernierRdvAdresseF, string $dernierRdvCommuneF, string $nbRdvF): Response{
         $interup = false;
         $requete =  $clientRepository->createQueryBuilder('c')
             ->leftjoin('c.rendezVous', 'r')
@@ -93,14 +93,14 @@ class ClientController extends AbstractController
             ->setParameter('nomF', '%'.$nomF.'%');
             $interup = true;
         }
-        if($telF != "**"){
-            $requete->andwhere('c.tel like :telF')
-            ->setParameter('telF', '%'.$telF.'%');
+        if($adresseFacF != "**"){
+            $requete->andwhere('c.adresse_facturation like :adresseFacF')
+            ->setParameter('adresseFacF', '%'.$adresseFacF.'%');
             $interup = true;
         }
-        if($mailF != "**"){
-            $requete->andwhere('c.mail like :mailF')
-            ->setParameter('mailF', '%'.$mailF.'%');
+        if($communeFacF != "**"){
+            $requete->andwhere('c.commune_facturation like :communeFacF')
+            ->setParameter('communeFacF', '%'.$communeFacF.'%');
             $interup = true;
         }
         if($dernierRdvAdresseF != "**"){
@@ -135,15 +135,15 @@ class ClientController extends AbstractController
             'dRdvDateDebF' => $dRdvDateDebF,
             'dRdvDateFinF' => $dRdvDateFinF,
             'nomF' => $nomF,
-            'mailF' => $mailF,
-            'telF' => $telF,
+            'adresseFacF' => $adresseFacF,
+            'communeFacF' => $communeFacF,
             'dernierRdvAdresseF' => $dernierRdvAdresseF,
             'dernierRdvCommuneF' => $dernierRdvCommuneF,
             'nbRdvF' => $nbRdvF
         ]);
     }
 
-    #[Route('/adresse/form/new', name: 'adresse.ajout', methods: ['GET', 'POST'])]
+    #[Route('/client/form/new', name: 'client.ajout', methods: ['GET', 'POST'])]
     public function ajout(ClientRepository $clientRepository, Request $request): Response
     {
         $client = new Client();
@@ -161,7 +161,7 @@ class ClientController extends AbstractController
             ]);
         }
 
-        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+        return $this->render('client/client.form.html.twig', [
             'client' => $client,
             'formClient' => $formClient->createView()
         ]);

@@ -15,9 +15,6 @@ class ClientType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('adresse_facturation')
-            ->add('cp_facturation')
-            ->add('commune_facturation')
             ->add('mail')
             ->add('tel')
             ->add('adresse_client')

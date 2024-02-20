@@ -5,19 +5,29 @@
 {% block body %}
     {% if dateConDeb|default(null) %}{% endif %}
     {% if dateConFin|default(null) %}{% endif %}
-    {% if status|default(null) %}{% endif %}
-    {% if statusD|default(null) %}{% endif %}
     {% if typeCon|default(null) %}{% endif %}
     {% if numDosier|default(null) %}{% endif %}
     {% if clientNom|default(null) %}{% endif %}
     {% if Adadresse|default(null) %}{% endif %}
     {% if aDcommune|default(null) %}{% endif %}
     {% if aDcadastre|default(null) %}{% endif %}
-    {% if efFiltre|default(null) %}{% endif %}
-    {% if ednFiltre|default(null) %}{% endif %}
+    {% if prorioNomF|default(null) %}{% endif %}
+    {% if prorioCommuneF|default(null) %}{% endif %}
     <div class="container-fluid">
         <div class="row">
-            <h1>Rdv index</h1>
+            <h1 class="text-center">Rendez-vous index</h1>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="d-flex justify-content-star">
+                        <a href="{{ path('rdv.ajout') }}" class="btn btn-info">
+                                Export CSV
+                        </a>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ path('rdv.ajout') }}" class="btn btn-primary">
+                            Ajouter un Rendez-vous
+                    </a>
+                </div>
+            </div>
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success mt-4">
                     {{ message }}
@@ -33,7 +43,7 @@
                 <thead>
                     <tr>
                         <form class="form-inline mt-1" method="POST" action="{{ path('rdv.findallcontain') }}">
-                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.date_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date de contrôle ', 'r.date_controle') }}
+                        <th class="text-left align-top text-primary" scope="col" {% if pagination.isSorted('r.date_controle') %} class="text-left align-top sorted text-primary"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date de contrôle ', 'r.date_controle') }}
                         </br>
                         <div class="form-group mr-1 mb-2">
                             <input type="date" class="input-group input-group-lg" name="dateConDeb" 
@@ -43,20 +53,6 @@
                             <input type="date" class="input-group input-group-lg" name="dateConFin" 
                                 value="{% if dateConFin|default and dateConFin != "**" %}{{ dateConFin }}{% endif %}">
                         </div>
-                        </th>
-                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('r.status') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status Facturation ', 'r.status') }}
-                        </br>
-                            <div class="form-group mr-1 mb-2">
-                                <input type="text" class="input-group input-group-lg" name="status" 
-                                    value="{% if status|default and status != "**" %}{{ status }}{% endif %}">
-                            </div>
-                        </th>
-                        <th  class="text-left align-top" scope="col" {% if pagination.isSorted('r.status_dossier') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status Dossier', 'r.status_dossier') }}
-                        </br>
-                            <div class="form-group mr-1 mb-2">
-                                <input type="text" class="input-group input-group-lg" name="statusD" 
-                                    value="{% if statusD|default and statusD != "**" %}{{ statusD }}{% endif %}">
-                            </div>
                         </th>
                         <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.type_controle') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Type du contrôle', 'r.type_controle') }}
                         </br>
@@ -100,12 +96,23 @@
                                     value="{% if aDcadastre|default and aDcadastre != "**" %}{{ aDcadastre }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col">Prochaine visite</th>
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.nom_propriaitaire') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom propriaitaire', 'r.nom_propriaitaire') }}
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="prorioNomF"
+                                    value="{% if prorioNomF|default and prorioNomF != "**" %}{{ prorioNomF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.commune_facturation') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Commune propriaitaire', 'r.commune_facturation') }}
+                        </br>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="prorioCommuneF"
+                                    value="{% if prorioCommuneF|default and prorioCommuneF != "**" %}{{ prorioCommuneF }}{% endif %}">
+                            </div>
+                        </th>
+                        <th class="text-left align-top text-body" scope="col" {% if pagination.isSorted('a.prochaineVisite') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Prochaine visite', 'r.commune_facturation') }} 
+                        </th>
                         <th class="text-left align-top" scope="col">
-                            <input type="checkbox" name="efFiltre"  id="efFiltre" {% if efFiltre|default and efFiltre != "**" %}checked{% endif %} />
-                            <label for="efFiltre">EF</label>
-                            <input type="checkbox" name="ednFiltre" id="ednFiltre" {% if ednFiltre|default and ednFiltre != "**" %}checked{% endif %} />
-                            <label for="ednFiltre">EDN</label>
                             </br>
                             <div class="form-group mr-1 mb-2">
                                 <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
@@ -118,15 +125,15 @@
                 {% for rendezVous in pagination %}
                     <tr>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.dateControle|date('d/m/Y') }}</a></td>
-                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.status }}</a></td>
-                        <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.statusDossier }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.typeControle }}</a></td>
                         <td><a href="{{ path('rdv.showone', { 'id': rendezVous.id }) }}" class="link-white">{{ rendezVous.numDossier }}</a></td>
                         <td><a href="{{(rendezVous.client == null ) ? '#' : path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white">{{ (rendezVous.client == null ) ? '' : rendezVous.client.nom ~ ' ' ~ rendezVous.client.prenom }}</a></td>
-                        <td><a href="{{ (rendezVous.adresse == null ) ? '#' : path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{  (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.adresseVisite }}</a></td>
-                        <td>{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.Commune ~ ' ' ~ rendezVous.Adresse.cp}}</td>
-                        <td>{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.sectionCadastrale }}</td>
-                        <td>{{ (rendezVous.adresse == null ) ? '' :  (rendezVous.Adresse.prochaineVisite == null )? '' : rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</a></td>
+                        <td><a href="{{ (rendezVous.adresse == null ) ? '#' : path('adresse.showone', { 'id': rendezVous.adresse.id }) }}" class="link-white">{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.numero ~ ' ' ~ rendezVous.Adresse.adresseVisite }}</a></td>
+                        <td class="text-body">{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.Commune ~ ' ' ~ rendezVous.Adresse.cp}}</td>
+                        <td class="text-body">{{ (rendezVous.adresse == null ) ? '' : rendezVous.Adresse.sectionCadastrale }}</td>
+                        <td class="text-body">{{ rendezVous.nomPropriaitaire ~ ' ' ~  rendezVous.prenomPropriaitaire}}</td>
+                        <td class="text-body">{{ rendezVous.communeFacturation ~ ' ' ~  rendezVous.cpFacturation }}</a></td>
+                        <td class="text-body">{{ (rendezVous.adresse == null ) ? '' :  (rendezVous.Adresse.prochaineVisite == null )? '' : rendezVous.Adresse.prochaineVisite|date('d/m/Y') }}</a></td>
                         <td></td>
                         
                     </tr>

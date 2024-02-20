@@ -186,7 +186,7 @@ class AdresseController extends AbstractController
             ]);
         }
 
-        return $this->render('rendez_vous/rendez_vous.form.html.twig', [
+        return $this->render('adresse/adresse.form.html.twig', [
             'adresse' => $adresse,
             'formAdresse' => $formAdresse->createView()
         ]);

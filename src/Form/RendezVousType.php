@@ -21,11 +21,9 @@ class RendezVousType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('status')
             ->add('facturation')
             ->add('date_facturation')
             ->add('commentaire')
-            ->add('status_dossier')
             ->add('type_controle')
             ->add('num_dossier')
             ->add('date_controle', DateType::class, [
@@ -40,8 +38,11 @@ class RendezVousType extends AbstractType
             ->add('conformite')
             ->add('impact')
             ->add('type_RPQS')
-            ->add('EF_etudes')
-            ->add('EDN')
+            ->add('adresse_facturation')
+            ->add('cp_facturation')
+            ->add('commune_facturation')
+            ->add('nom_propriaitaire')
+            ->add('prenom_propriaitaire')
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'query_builder' => function (ClientRepository $er): QueryBuilder {

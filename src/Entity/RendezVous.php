@@ -17,9 +17,6 @@ class RendezVous
     private ?int $id = null;
 
     #[ORM\Column(length: 500, nullable: true)]
-    private ?string $status = null;
-
-    #[ORM\Column(length: 500, nullable: true)]
     private ?string $facturation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -27,9 +24,6 @@ class RendezVous
 
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $commentaire = null;
-
-    #[ORM\Column(length: 2000, nullable: true)]
-    private ?string $status_dossier = null;
 
     #[ORM\Column(length: 2000, nullable: true)]
     private ?string $type_controle = null;
@@ -58,6 +52,21 @@ class RendezVous
     #[ORM\Column(length: 255, nullable : true)]
     private ?string $type_RPQS = null;
 
+    #[ORM\Column(length: 2000, nullable: true)]
+    private ?string $adresse_facturation = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cp_facturation = null;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $commune_facturation = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom_propriaitaire = null;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $prenom_propriaitaire = null;
+
     #[ORM\ManyToOne(inversedBy: 'rendezVous', cascade : ['detach'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Client $client = null;
@@ -66,28 +75,9 @@ class RendezVous
     #[ORM\JoinColumn(nullable: true)]
     private ?Adresse $adresse = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $EF_etudes = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $EDN = null;
-
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?string $status): static
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getFacturation(): ?string
@@ -122,18 +112,6 @@ class RendezVous
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
-
-        return $this;
-    }
-
-    public function getStatusDossier(): ?string
-    {
-        return $this->status_dossier;
-    }
-
-    public function setStatusDossier(?string $status_dossier): static
-    {
-        $this->status_dossier = $status_dossier;
 
         return $this;
     }
@@ -246,6 +224,66 @@ class RendezVous
         return $this;
     }
 
+    public function getAdresseFacturation(): ?string
+    {
+        return $this->adresse_facturation;
+    }
+
+    public function setAdresseFacturation(?string $adresse_facturation): static
+    {
+        $this->adresse_facturation = $adresse_facturation;
+
+        return $this;
+    }
+
+    public function getCpFacturation(): ?string
+    {
+        return $this->cp_facturation;
+    }
+
+    public function setCpFacturation(?string $cp_facturation): static
+    {
+        $this->cp_facturation = $cp_facturation;
+
+        return $this;
+    }
+
+    public function getCommuneFacturation(): ?string
+    {
+        return $this->commune_facturation;
+    }
+
+    public function setCommuneFacturation(?string $commune_facturation): static
+    {
+        $this->commune_facturation = $commune_facturation;
+
+        return $this;
+    }
+
+    public function getNomPropriaitaire(): ?string
+    {
+        return $this->nom_propriaitaire;
+    }
+
+    public function setNomPropriaitaire(?string $nom_propriaitaire): static
+    {
+        $this->nom_propriaitaire = $nom_propriaitaire;
+
+        return $this;
+    }
+
+    public function getPrenomPropriaitaire(): ?string
+    {
+        return $this->prenom_propriaitaire;
+    }
+
+    public function setPrenomPropriaitairee(?string $prenom_propriaitaire): static
+    {
+        $this->prenom_propriaitaire = $prenom_propriaitaire;
+
+        return $this;
+    }
+
     /**
      * Get the value of client
      *
@@ -278,30 +316,6 @@ class RendezVous
     public function setAdresse(?adresse $adresse): static
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function isEFEtudes(): ?bool
-    {
-        return $this->EF_etudes;
-    }
-
-    public function setEFEtudes(?bool $EF_etudes): static
-    {
-        $this->EF_etudes = $EF_etudes;
-
-        return $this;
-    }
-
-    public function isEDN(): ?bool
-    {
-        return $this->EDN;
-    }
-
-    public function setEDN(?bool $EDN): static
-    {
-        $this->EDN = $EDN;
 
         return $this;
     }

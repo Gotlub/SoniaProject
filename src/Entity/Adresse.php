@@ -19,6 +19,9 @@ class Adresse
     #[ORM\Column(name: "prochaine_visite", type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $prochaine_visite = null;
 
+    #[ORM\Column(name: "numero", length: 20)]
+    private ?string $numero = null;
+
     #[ORM\Column(name: "adresse", length: 2000)]
     private ?string $adresseVisite = null;
 
@@ -53,7 +56,7 @@ class Adresse
 
     public function __toString()
     {
-        return $this->adresseVisite . " " . $this->commune . " " . $this->cp;
+        return $this->numero . " " . $this->adresseVisite . " " . $this->commune . " " . $this->cp;
     }
 
     public function getProchaineVisite(): ?\DateTimeInterface
@@ -64,6 +67,18 @@ class Adresse
     public function setProchaineVisite(?\DateTimeInterface $prochaine_visite): static
     {
         $this->prochaine_visite = $prochaine_visite;
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): static
+    {
+        $this->numero = $numero;
 
         return $this;
     }

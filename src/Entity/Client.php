@@ -21,15 +21,6 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 2000, nullable: true)]
-    private ?string $adresse_facturation = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cp_facturation = null;
-
-    #[ORM\Column(length: 500, nullable: true)]
-    private ?string $commune_facturation = null;
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: RendezVous::class, cascade : ['detach'])]
     private Collection $rendezVous;
 
@@ -84,42 +75,6 @@ class Client
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getAdresseFacturation(): ?string
-    {
-        return $this->adresse_facturation;
-    }
-
-    public function setAdresseFacturation(?string $adresse_facturation): static
-    {
-        $this->adresse_facturation = $adresse_facturation;
-
-        return $this;
-    }
-
-    public function getCpFacturation(): ?string
-    {
-        return $this->cp_facturation;
-    }
-
-    public function setCpFacturation(?string $cp_facturation): static
-    {
-        $this->cp_facturation = $cp_facturation;
-
-        return $this;
-    }
-
-    public function getCommuneFacturation(): ?string
-    {
-        return $this->commune_facturation;
-    }
-
-    public function setCommuneFacturation(?string $commune_facturation): static
-    {
-        $this->commune_facturation = $commune_facturation;
 
         return $this;
     }
