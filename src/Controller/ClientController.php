@@ -129,6 +129,7 @@ class ClientController extends AbstractController
             20,
             array('wrap-queries'=>true)
         );
+        $trie = 1;
 
         return $this->render('client/index.html.twig', [
             'pagination' => $pagination,
@@ -139,7 +140,8 @@ class ClientController extends AbstractController
             'communeFacF' => $communeFacF,
             'dernierRdvAdresseF' => $dernierRdvAdresseF,
             'dernierRdvCommuneF' => $dernierRdvCommuneF,
-            'nbRdvF' => $nbRdvF
+            'nbRdvF' => $nbRdvF,
+            'trie'=> $trie
         ]);
     }
 

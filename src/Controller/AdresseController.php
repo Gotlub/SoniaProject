@@ -150,9 +150,10 @@ class AdresseController extends AbstractController
             $requete->getQuery(),
             $request->query->get('page', 1),
             20,
-            array('wrap-queries'=>true)
-            
+            array('wrap-queries'=>true)  
         );
+        $trie = 1;
+
         return $this->render('adresse/index.html.twig', [
             'pagination' => $pagination,
             'dateProDebF' => $dateProDebF,
@@ -164,7 +165,8 @@ class AdresseController extends AbstractController
             'communeF' => $communeF,
             'section_CF' => $section_CF,
             'dernierClientF' => $dernierClientF,
-            'nbControleF' => $nbControleF
+            'nbControleF' => $nbControleF,
+            'trie'=> $trie
         ]);
     }
 

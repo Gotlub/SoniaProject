@@ -143,6 +143,7 @@ class RendezVousController extends AbstractController
             $request->query->get('page', 1),
             20
         );
+        $trie = 1;
 
         return $this->render('rendez_vous/index.html.twig', [
             'pagination' => $pagination,
@@ -155,7 +156,8 @@ class RendezVousController extends AbstractController
             'aDcommune' => $aDcommune,
             'aDcadastre' => $aDcadastre,
             'prorioNomF' => $prorioNomF,
-            'prorioCommuneF' => $prorioCommuneF
+            'prorioCommuneF' => $prorioCommuneF,
+            'trie'=> $trie
         ]);
     }
 

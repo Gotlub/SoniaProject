@@ -13,15 +13,18 @@
     {% if aDcadastre|default(null) %}{% endif %}
     {% if prorioNomF|default(null) %}{% endif %}
     {% if prorioCommuneF|default(null) %}{% endif %}
+    {% if trie|default(null) %}{% endif %}
     <div class="container-fluid">
         <div class="row">
             <h1 class="text-center">Rendez-vous index</h1>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div class="d-flex justify-content-star">
-                        <a href="{{ path('rdv.ajout') }}" class="btn btn-info">
-                                Export CSV
-                        </a>
-                </div>
+                {% if trie|default and trie == 1 %}
+                    <div class="d-flex justify-content-star">
+                            <a href="{{ path('csv.rdv', {dateConDeb: dateConDeb, dateConFin: dateConFin, typeCon: typeCon,numDosier: numDosier, clientNom: clientNom , Adadresse: Adadresse , aDcommune: aDcommune , aDcadastre: aDcadastre , prorioNomF: prorioNomF , prorioCommuneF: prorioCommuneF }) }}" class="btn btn-info">
+                                    Export CSV
+                            </a>
+                    </div>
+                {% endif %}
                 <div class="d-flex justify-content-end">
                     <a href="{{ path('rdv.ajout') }}" class="btn btn-primary">
                             Ajouter un Rendez-vous

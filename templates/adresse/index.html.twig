@@ -13,6 +13,7 @@
     {% if section_CF|default(null) %}{% endif %}
     {% if dernierClientF|default(null) %}{% endif %}
     {% if nbControleF|default(null) %}{% endif %}
+    {% if trie|default(null) %}{% endif %}
     {% for message in app.flashes('success') %}
         <div class="alert alert-success mt-4">
             {{ message }}
@@ -28,11 +29,20 @@
             <br/>
             <h1 class="text-center">Adresse index</h1>
             <br/>
-            <p class="text-end">
-                <a href="{{ path('adresse.ajout') }}" class="btn btn-primary">
-                    Ajouter une adresse
-                </a>
-            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                {% if trie|default and trie == 1 %}
+                    <div class="d-flex justify-content-star">
+                            <a href="" class="btn btn-info">
+                                    Export CSV
+                            </a>
+                    </div>
+                {% endif %}
+                <div class="d-flex justify-content-end">
+                    <a href="{{ path('adresse.ajout') }}" class="btn btn-primary">
+                            Ajouter une adresse
+                    </a>
+                </div>
+            </div>
             <table style="width: 100;" class="table table-striped table-condensed">
                 <thead>
                     <tr>
