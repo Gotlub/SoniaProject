@@ -80,6 +80,11 @@ class RendezVous
         return $this->id;
     }
 
+    static function cmp_obj($a, $b)
+    {
+        return strtolower($b->getDateControle()->Format('Y-m-d')) <=> strtolower($a->getDateControle()->Format('Y-m-d'));
+    }
+
     public function getFacturation(): ?string
     {
         return $this->facturation;

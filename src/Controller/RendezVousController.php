@@ -53,6 +53,8 @@ class RendezVousController extends AbstractController
         $Adadresse = ($Adadresse == "") ? "**" : $Adadresse;
         $aDcommune = $request->get("aDcommune");
         $aDcommune = ($aDcommune == "") ? "**" : $aDcommune;
+        $aDcommuneExaF = $request->get("aDcommuneExaF");
+        $aDcommuneExaF = ($aDcommuneExaF == "") ? "**" : $aDcommuneExaF;
         $aDcadastre = $request->get("aDcadastre");
         $aDcadastre = ($aDcadastre == "") ? "**" : $aDcadastre;
         $prorioNomF = $request->get("prorioNomF");
@@ -68,17 +70,18 @@ class RendezVousController extends AbstractController
             'clientNom' => $clientNom,
             'Adadresse' => $Adadresse,
             'aDcommune' => $aDcommune,
+            'aDcommuneExaF' => $aDcommuneExaF,
             'aDcadastre' => $aDcadastre,
             'prorioNomF' => $prorioNomF,
             'prorioCommuneF' => $prorioCommuneF
         ]);
     }
 
-    #[Route('/rdv/{dateConDeb}/{dateConFin}/{typeCon}/{numDosier}/{clientNom}/{Adadresse}/{aDcommune}/{aDcadastre}/{prorioNomF}/{prorioCommuneF}/', name: 'rdv.findallcontainReq', methods: ['GET'])]
+    #[Route('/rdv/{dateConDeb}/{dateConFin}/{typeCon}/{numDosier}/{clientNom}/{Adadresse}/{aDcommune}/{aDcommuneExaF}/{aDcadastre}/{prorioNomF}/{prorioCommuneF}/', name: 'rdv.findallcontainReq', methods: ['GET'])]
     public function findAllContainReq( RendezVousRepository $rendezVousRepository,
     Request $request, PaginatorInterface $paginator,
     string $dateConDeb ,string  $dateConFin, string $typeCon, string $numDosier, string $clientNom,
-    string $Adadresse, string $aDcommune, string $aDcadastre, string $prorioNomF, string $prorioCommuneF): Response{
+    string $Adadresse, string $aDcommune, string $aDcommuneExaF, string $aDcadastre, string $prorioNomF, string $prorioCommuneF): Response{
         $interup = false;
         $requete = $rendezVousRepository->createQueryBuilder('r')
                     ->join('r.client', 'c')
@@ -111,13 +114,18 @@ class RendezVousController extends AbstractController
             $interup = true;
         }
         if($Adadresse != "**"){
-            $requete->andwhere('a.adresse like :Adadresse')
+            $requete->andwhere('a.adresseVisite like :Adadresse')
                 ->setParameter('Adadresse', '%'.$Adadresse.'%');
             $interup = true;
         }
         if($aDcommune != "**"){
             $requete->andwhere('a.commune like :aDcommune')
                 ->setParameter('aDcommune', '%'.$aDcommune.'%');
+            $interup = true;
+        }
+        if($aDcommuneExaF != "**"){
+            $requete->andwhere('a.commune = :aDcommuneExaF')
+                ->setParameter('aDcommuneExaF', $aDcommuneExaF);
             $interup = true;
         }
         if($aDcadastre != "**"){
@@ -154,6 +162,7 @@ class RendezVousController extends AbstractController
             'clientNom' => $clientNom,
             'Adadresse' => $Adadresse,
             'aDcommune' => $aDcommune,
+            'aDcommuneExaF' => $aDcommuneExaF,
             'aDcadastre' => $aDcadastre,
             'prorioNomF' => $prorioNomF,
             'prorioCommuneF' => $prorioCommuneF,

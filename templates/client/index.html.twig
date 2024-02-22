@@ -26,8 +26,8 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
                     <div class="d-flex justify-content-star">
-                            <a href="" class="btn btn-info">
-                                    Export CSV
+                            <a href="{{ path('csv.client', {dRdvDateDebF: dRdvDateDebF, dRdvDateFinF: dRdvDateFinF, nomF: nomF, adresseFacF: adresseFacF, communeFacF: communeFacF, dernierRdvAdresseF: dernierRdvAdresseF, dernierRdvCommuneF: dernierRdvCommuneF, nbRdvF: nbRdvF }) }}" class="btn btn-info">
+                                    Export Xlsx
                             </a>
                     </div>
                 {% endif %}

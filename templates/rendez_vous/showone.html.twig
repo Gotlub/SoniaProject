@@ -91,7 +91,7 @@
                 </table>
             {% endif %}
             <br/>
-            <p class="text-primary"><strong>Rendez-vous :</strong></p>
+            <p class="text-primary"><strong>Rendez-vous : {{rendezVous.numDossier}}</strong></p>
             <table class="table">
                 <tbody>
                     <tr>
@@ -147,7 +147,7 @@
                         <td class="text-body">{{ rendezVous.communeFacturation ~ ' ' ~  rendezVous.cpFacturation }}</td>
                     </tr>
                     <tr>
-                        <th class="text-body">Propriaitaire</th>
+                        <th class="text-body">Propriétaire</th>
                         <td class="text-body">{{ rendezVous.nomPropriaitaire ~ ' ' ~  rendezVous.prenomPropriaitaire}}</td>
                     </tr>
                 </tbody>

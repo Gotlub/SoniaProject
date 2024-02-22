@@ -10,6 +10,7 @@
     {% if clientNom|default(null) %}{% endif %}
     {% if Adadresse|default(null) %}{% endif %}
     {% if aDcommune|default(null) %}{% endif %}
+    {% if aDcommuneExaF|default(null) %}{% endif %}
     {% if aDcadastre|default(null) %}{% endif %}
     {% if prorioNomF|default(null) %}{% endif %}
     {% if prorioCommuneF|default(null) %}{% endif %}
@@ -20,8 +21,8 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
                     <div class="d-flex justify-content-star">
-                            <a href="{{ path('csv.rdv', {dateConDeb: dateConDeb, dateConFin: dateConFin, typeCon: typeCon,numDosier: numDosier, clientNom: clientNom , Adadresse: Adadresse , aDcommune: aDcommune , aDcadastre: aDcadastre , prorioNomF: prorioNomF , prorioCommuneF: prorioCommuneF }) }}" class="btn btn-info">
-                                    Export CSV
+                            <a href="{{ path('csv.rdv', {dateConDeb: dateConDeb, dateConFin: dateConFin, typeCon: typeCon,numDosier: numDosier, clientNom: clientNom , Adadresse: Adadresse , aDcommune: aDcommune , aDcadastre: aDcadastre, aDcommuneExaF : aDcommuneExaF, prorioNomF: prorioNomF , prorioCommuneF: prorioCommuneF }) }}" class="btn btn-info">
+                                    Export Xlsx
                             </a>
                     </div>
                 {% endif %}
@@ -91,6 +92,10 @@
                                 <input type="text" class="input-group input-group-lg" name="aDcommune"
                                     value="{% if aDcommune|default and aDcommune != "**" %}{{ aDcommune }}{% endif %}">
                             </div>
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="aDcommuneExaF"
+                                    value="{% if aDcommuneExaF|default and aDcommuneExaF != "**" %}{{ aDcommuneExaF }}{% endif %}">
+                            </div>
                         </th>
                         <th class="text-left align-top" scope="col" {% if pagination.isSorted('a.section_cadastrale') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Cadastre S', 'a.section_cadastrale') }}
                         </br>
@@ -99,14 +104,14 @@
                                     value="{% if aDcadastre|default and aDcadastre != "**" %}{{ aDcadastre }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.nom_propriaitaire') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom propriaitaire', 'r.nom_propriaitaire') }}
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.nom_propriaitaire') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom propriétaire', 'r.nom_propriaitaire') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="prorioNomF"
                                     value="{% if prorioNomF|default and prorioNomF != "**" %}{{ prorioNomF }}{% endif %}">
                             </div>
                         </th>
-                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.commune_facturation') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Commune propriaitaire', 'r.commune_facturation') }}
+                        <th class="text-left align-top" scope="col" {% if pagination.isSorted('r.commune_facturation') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Commune propriétaire', 'r.commune_facturation') }}
                         </br>
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="prorioCommuneF"

@@ -32,8 +32,8 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
                     <div class="d-flex justify-content-star">
-                            <a href="" class="btn btn-info">
-                                    Export CSV
+                            <a href="{{ path('csv.adresse', {dateProDebF: dateProDebF, dateProFinF: dateProFinF, dateAncDebF: dateAncDebF, dateAncFinF: dateAncFinF, adresseVF: adresseVF , cpF: cpF , communeF: communeF , section_CF: section_CF , dernierClientF: dernierClientF , nbControleF: nbControleF }) }}" class="btn btn-info">
+                                    Export Xlsx
                             </a>
                     </div>
                 {% endif %}
