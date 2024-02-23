@@ -28,7 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <br/>
-            <h1 class="text-center">Adresse index</h1>
+            <h1 class="text-center text-body-tertiary"><strong>Adresse index</strong></h1>
             <br/>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
@@ -91,7 +91,7 @@
                                     value="{% if communeF|default and communeF != "**" %}{{ communeF }}{% endif %}">
                             </div>
                              <div class="form-group mr-1 mb-2">
-                                <input type="text" class="input-group input-group-lg" name="communeExaF"
+                                <input type="text" class="input-group input-group-lg" name="communeExaF" placeholder="nom exacte"
                                     value="{% if communeExaF|default and communeExaF != "**" %}{{ communeExaF }}{% endif %}">
                             </div>
                         </th>

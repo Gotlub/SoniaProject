@@ -17,7 +17,7 @@
     {% if trie|default(null) %}{% endif %}
     <div class="container-fluid">
         <div class="row">
-            <h1 class="text-center">Rendez-vous index</h1>
+            <h1 class="text-center text-body-tertiary"><strong>Rendez-vous index</strong></h1>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
                     <div class="d-flex justify-content-star">
@@ -93,7 +93,7 @@
                                     value="{% if aDcommune|default and aDcommune != "**" %}{{ aDcommune }}{% endif %}">
                             </div>
                             <div class="form-group mr-1 mb-2">
-                                <input type="text" class="input-group input-group-lg" name="aDcommuneExaF"
+                                <input type="text" class="input-group input-group-lg" name="aDcommuneExaF" placeholder="nom exacte"
                                     value="{% if aDcommuneExaF|default and aDcommuneExaF != "**" %}{{ aDcommuneExaF }}{% endif %}">
                             </div>
                         </th>
