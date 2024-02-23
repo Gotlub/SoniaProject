@@ -206,9 +206,9 @@ class CSVController extends AbstractController
         return $response;
     }
 
-    #[Route('/csv/adresse/{dateProDebF}/{dateProFinF}/{dateAncDebF}/{dateAncFinF}/{adresseVF}/{cpF}/{communeF}/{section_CF}/{dernierClientF}/{nbControleF}', name: 'csv.adresse', methods: ['GET'])]
+    #[Route('/csv/adresse/{dateProDebF}/{dateProFinF}/{dateAncDebF}/{dateAncFinF}/{adresseVF}/{cpF}/{communeF}/{communeExaF}/{section_CF}/{dernierClientF}/{nbControleF}', name: 'csv.adresse', methods: ['GET'])]
     public function adresseCSV( AdresseRepository $adresseRepository,
-    string $dateProDebF, string $dateProFinF, string $dateAncDebF, string $dateAncFinF, string $adresseVF, string $cpF, string $communeF, string $section_CF, string $dernierClientF,
+    string $dateProDebF, string $dateProFinF, string $dateAncDebF, string $dateAncFinF, string $adresseVF, string $cpF, string $communeF, string $communeExaF, string $section_CF, string $dernierClientF,
     string $nbControleF): Response{
         $interup = false;
         $requete =  $adresseRepository->createQueryBuilder('a')
@@ -256,6 +256,11 @@ class CSVController extends AbstractController
         if($communeF != "**"){
             $requete->andwhere('a.commune like :communeF')
             ->setParameter('communeF', '%'.$communeF.'%');
+            $interup = true;
+        }
+        if($communeExaF != "**"){
+            $requete->andwhere('a.commune = :communeExaF')
+            ->setParameter('communeExaF', $communeExaF);
             $interup = true;
         }
         if($section_CF != "**"){
@@ -323,7 +328,7 @@ class CSVController extends AbstractController
         $contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
         $writer = new Xlsx($file);
         $response = new StreamedResponse();
-        $filename = implode( '-', ['Adresse', $dateProDebF, $dateProFinF, $dateAncDebF, $dateAncFinF, $adresseVF, $cpF, $communeF, $section_CF, $dernierClientF, $nbControleF ]);
+        $filename = implode( '-', ['Adresse', $dateProDebF, $dateProFinF, $dateAncDebF, $dateAncFinF, $adresseVF, $cpF, $communeF, $communeExaF, $section_CF, $dernierClientF, $nbControleF ]);
         $response->headers->set('Content-Type', $contentType);
         $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename . '".xlsx"');
         $response->setPrivate();

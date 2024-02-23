@@ -10,6 +10,7 @@
     {% if adresseVF|default(null) %}{% endif %}
     {% if cpF|default(null) %}{% endif %}
     {% if communeF|default(null) %}{% endif %}
+    {% if communeExaF|default(null) %}{% endif %}
     {% if section_CF|default(null) %}{% endif %}
     {% if dernierClientF|default(null) %}{% endif %}
     {% if nbControleF|default(null) %}{% endif %}
@@ -32,7 +33,7 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if trie|default and trie == 1 %}
                     <div class="d-flex justify-content-star">
-                            <a href="{{ path('csv.adresse', {dateProDebF: dateProDebF, dateProFinF: dateProFinF, dateAncDebF: dateAncDebF, dateAncFinF: dateAncFinF, adresseVF: adresseVF , cpF: cpF , communeF: communeF , section_CF: section_CF , dernierClientF: dernierClientF , nbControleF: nbControleF }) }}" class="btn btn-info">
+                            <a href="{{ path('csv.adresse', {dateProDebF: dateProDebF, dateProFinF: dateProFinF, dateAncDebF: dateAncDebF, dateAncFinF: dateAncFinF, adresseVF: adresseVF, cpF: cpF, communeF: communeF, communeExaF : communeExaF, section_CF: section_CF, dernierClientF: dernierClientF , nbControleF: nbControleF }) }}" class="btn btn-info">
                                     Export Xlsx
                             </a>
                     </div>
@@ -88,6 +89,10 @@
                             <div class="form-group mr-1 mb-2">
                                 <input type="text" class="input-group input-group-lg" name="communeF" 
                                     value="{% if communeF|default and communeF != "**" %}{{ communeF }}{% endif %}">
+                            </div>
+                             <div class="form-group mr-1 mb-2">
+                                <input type="text" class="input-group input-group-lg" name="communeExaF"
+                                    value="{% if communeExaF|default and communeExaF != "**" %}{{ communeExaF }}{% endif %}">
                             </div>
                         </th>
                         <th class="text-left align-top" scope="col"{% if pagination.isSorted('a.section_cadastrale') %} class="text-left align-top sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Cadastre', 'a.section_cadastrale') }}

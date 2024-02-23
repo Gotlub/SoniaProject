@@ -52,6 +52,8 @@ class AdresseController extends AbstractController
         $cpF = ($cpF == "") ? "**" : $cpF;
         $communeF = $request->get("communeF");
         $communeF = ($communeF == "") ? "**" : $communeF;
+        $communeExaF = $request->get("communeExaF");
+        $communeExaF = ($communeExaF == "") ? "**" : $communeExaF;
         $section_CF = $request->get("section_CF");
         $section_CF = ($section_CF == "") ? "**" : $section_CF;
         $dernierClientF = $request->get("dernierClientF");
@@ -67,16 +69,17 @@ class AdresseController extends AbstractController
             'adresseVF' => $adresseVF,
             'cpF' => $cpF,
             'communeF' => $communeF,
+            'communeExaF' => $communeExaF,
             'section_CF' => $section_CF,
             'dernierClientF' => $dernierClientF,
             'nbControleF' => $nbControleF
         ]);
     }
 
-    #[Route('/adresse/{dateProDebF}/{dateProFinF}/{dateAncDebF}/{dateAncFinF}/{adresseVF}/{cpF}/{communeF}/{section_CF}/{dernierClientF}/{nbControleF}', name: 'adresse.findallcontainReq', methods: ['GET'])]
+    #[Route('/adresse/{dateProDebF}/{dateProFinF}/{dateAncDebF}/{dateAncFinF}/{adresseVF}/{cpF}/{communeF}/{communeExaF}/{section_CF}/{dernierClientF}/{nbControleF}', name: 'adresse.findallcontainReq', methods: ['GET'])]
     public function findAllContainReq( AdresseRepository $adresseRepository,
     Request $request, PaginatorInterface $paginator,
-    string $dateProDebF, string $dateProFinF, string $dateAncDebF, string $dateAncFinF, string $adresseVF, string $cpF, string $communeF, string $section_CF, string $dernierClientF,
+    string $dateProDebF, string $dateProFinF, string $dateAncDebF, string $dateAncFinF, string $adresseVF, string $cpF, string $communeF, string $communeExaF, string $section_CF, string $dernierClientF,
     string $nbControleF): Response{
         $interup = false;
         $requete =  $adresseRepository->createQueryBuilder('a')
@@ -126,6 +129,11 @@ class AdresseController extends AbstractController
             ->setParameter('communeF', '%'.$communeF.'%');
             $interup = true;
         }
+        if($communeExaF != "**"){
+            $requete->andwhere('a.commune = :communeExaF')
+            ->setParameter('communeExaF', $communeExaF);
+            $interup = true;
+        }
         if($section_CF != "**"){
             $requete->andwhere('a.section_cadastrale like :section_CF')
             ->setParameter('section_CF', '%'.$section_CF.'%');
@@ -163,6 +171,7 @@ class AdresseController extends AbstractController
             'adresseVF' => $adresseVF,
             'cpF' => $cpF,
             'communeF' => $communeF,
+            'communeExaF' => $communeExaF,
             'section_CF' => $section_CF,
             'dernierClientF' => $dernierClientF,
             'nbControleF' => $nbControleF,

@@ -9,10 +9,11 @@
         {% endif %}
 
         {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            <br>
+            <div class="mb-3 text-center">
+               <h2>Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a></h2>
             </div>
-        {% endif %}
+        {% else %}
         <br>
         <div class="container">
             <h1 class="h3 mb-3 font-weight-normal">Formulaire de connexion</h1>
@@ -36,5 +37,6 @@
                 Sign in
             </button>
         </form>
+        {% endif %}
     </div>
 {% endblock %}
