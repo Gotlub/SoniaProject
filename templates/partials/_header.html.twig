@@ -21,7 +21,9 @@
           </li>
         </div>
         <div class="nav-item justify-content-md-end navbar-nav">
-          <a class="nav-link" href="">Admin</a>
+          {% if app.user %}
+                 <a href="{{ path('app_logout') }}">Logout</a>
+          {% endif %}
         </div>
     </div>
   </nav>

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RendezVousController extends AbstractController
 {
-    #[Route('/', name: 'rdv.index', methods: ['GET', 'POST'])]
+    #[Route('/rdv', name: 'rdv.index', methods: ['GET', 'POST'])]
     public function index(RendezVousRepository $rendezVousRepository,
     Request $request, PaginatorInterface $paginator): Response
     {
@@ -37,7 +37,7 @@ class RendezVousController extends AbstractController
         ]);
     }
 
-    #[Route('/rendezvous/findallcontain', name: 'rdv.findallcontain', methods: ['POST'])]
+    #[Route('/rdv/findallcontain/reroute', name: 'rdv.findallcontain', methods: ['POST'])]
     public function findAllContain(Request $request): Response{
         $dateConDeb = $request->get("dateConDeb");
         $dateConDeb = ($dateConDeb == "") ? "**" : $dateConDeb;
