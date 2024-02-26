@@ -22,7 +22,8 @@
       </div>
       <div class="nav-item justify-content-md-end navbar-nav">
         {% if app.user %}
-          <a href="{{ path('app_logout') }}">Logout</a>
+          <a href="{{ path('user.edit.password',  {id : app.user.id }) }}" class="nav-link active me-sm-2">Mot de passe</a>
+          <a href="{{ path('app_logout') }}" class="nav-link active my-2 my-sm-0">Logout</a>
         {% endif %}
       </div>
   </div>

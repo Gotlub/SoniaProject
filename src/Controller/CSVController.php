@@ -78,11 +78,6 @@ class CSVController extends AbstractController
         }
         return $file;
     }
-    function build_sorter($key) {
-        return function ($a, $b) use ($key) {
-            return strnatcmp($a[$key], $b[$key]);
-        };
-    }
 
     #[Route('/csv/rdv/{dateConDeb}/{dateConFin}/{typeCon}/{numDosier}/{clientNom}/{Adadresse}/{aDcommune}/{aDcommuneExaF}/{aDcadastre}/{prorioNomF}/{prorioCommuneF}/', name: 'csv.rdv')]
     public function rdvCSV(RendezVousRepository $rendezVousRepository,
