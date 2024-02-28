@@ -14,12 +14,12 @@
         </div>
     {% endfor %}
     <div class="container mt-4">
-        <h1>{{ adresseEntite.numero ~ ' ' ~ adresseEntite.adresseVisite}} </h1>
-        <h3>{{ (adresseEntite.prochaineVisite == null ) ? '  ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</h3>
+        <h1 class="mb-3 font-weight-normal text-primary">{{ adresseEntite.numero ~ ' ' ~ adresseEntite.adresseVisite}} </h1>
+        <h3 class="mb-3 font-weight-normal text-primary">{{ (adresseEntite.prochaineVisite == null ) ? '  ' :  adresseEntite.prochaineVisite|date('d/m/Y') }}</h3>
         <hr class="my-4">
-        <p>{{ adresseEntite.cp }}</p>
+        <p><strong>{{ adresseEntite.cp }}</strong></p>
         <br/>
-        <p>Adresse :</p>
+        <p><strong>Adresse :<strong></p>
         <div class="jumbotron">
              <table class="table">
                 <tbody>
@@ -70,7 +70,7 @@
             </div>
             <br/>
             <hr class="my-4">
-            <h2>Rendez vous a cette adresse : </h3>
+            <h2 class="mb-3 font-weight-normal text-primary">Rendez vous a cette adresse : </h3>
             <table style="width: 100;" class="table table-striped table-condensed">
                 <thead>
                     <tr>

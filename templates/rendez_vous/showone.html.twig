@@ -14,10 +14,10 @@
         </div>
     {% endfor %}
     <div class="container mt-4">
-        <h1>Rendez-vous n° dossier : {{rendezVous.numDossier}} </h1>
-        <h3>Date du contrôle : {{rendezVous.dateControle|date('d/m/Y')}}</h3>
+        <h1 class="mb-3 font-weight-normal text-primary">Rendez-vous n° dossier : {{rendezVous.numDossier}} </h1>
+        <h3 class="h3 font-weight-normal text-primary">Date du contrôle : {{rendezVous.dateControle|date('d/m/Y')}}</h3>
         <hr class="my-4">
-        <p>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</p>
+        <p><strong>{{(rendezVous.typeInstallation is same as(null)) ? ' ' : 'Type installation : ' ~ rendezVous.typeInstallation}}</strong></p>
         <br/>
         {% if rendezVous.client != null %}
         <strong><a href="{{ path('client.showone', { 'id': rendezVous.client.id}) }}" class="link-white"><p>Client RDV :</p></a></strong>

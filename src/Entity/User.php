@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -27,7 +28,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?string $password = null;
+
+    private ?string $plainpassword = null;
 
     public function getId(): ?int
     {
@@ -97,5 +101,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * Get the value of plainpassword
+     *
+     * @return ?string
+     */
+    public function getPlainpassword(): ?string
+    {
+        return $this->plainpassword;
+    }
+
+    /**
+     * Set the value of plainpassword
+     *
+     * @param ?string $plainpassword
+     *
+     * @return self
+     */
+    public function setPlainpassword(?string $plainpassword): self
+    {
+        $this->plainpassword = $plainpassword;
+
+        return $this;
     }
 }
