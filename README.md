@@ -28,3 +28,22 @@ Puis nodeJs
 npm install
 npm run watch
 ```
+
+[Structure de la base de données avec trigger](https://github.com/Gotlub/SoniaProject/blob/main/documents/StructureBDDpourTest.sql)  
+[![tables](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/mcd.png)](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/mcd.png)
+## Description du projet
+[Exemple d'un des script python pour l'importation des données ](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/finalscriptExemple.py)
+  
+   
+[![project](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/filtres.jpg)](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/filtres.jpg)
+
+Le projet permet de trier, filtrer et exporter les rendez-vous renseignés dans la BDD.
+Il utilise le bundle knp_paginator pour la pagination et pour trier les différents champs.
+Les filtres ont été réalisés sans bundle pour plus de modularité.
+
+
+[Utilisation du bundle ux_autocomplete : ](https://symfony.com/bundles/ux-autocomplete/current/index.html)
+[![autoComplete](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/autoComplete.jpg)](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/autoComplete.jpg)
+
+[Export au formal Xlsx avec php PhpSpreadsheet : ](https://phpspreadsheet.readthedocs.io/en/latest/)
+[![PhpSpreadsheet](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/Xlsx.jpg)](https://raw.githubusercontent.com/Gotlub/SoniaProject/main/documents/Xlsx.jpg)
