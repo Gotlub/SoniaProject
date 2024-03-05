@@ -1,0 +1,31 @@
+   [['a', '0'], ['b', '1'], ['c', '2'], ['d', '3'], ['e', '4'], ['f', '5'], ['g', '6'], ['h', '7'], ['i', '8'], ['j', '9'], ['k', '10'], ['l', '11'], ['m', '12'], ['n', '13'], ['o', '14'], ['p', '15'], ['q', '16'], ['r', '17'], ['s', '18'], ['t', '19'], ['u', '20'], ['v', '21'], ['w', '22'], ['x', '23'], ['y', '24'], ['z', '25']]
+  
+client :  nom                17
+	      prenom             18
+		  
+		  
+adresse : adresse              20
+		  cp                   21
+		  commune              22
+		  section_cadastrale   19
+		  ancienne_adresse
+		  
+rdv : status               0
+      facturation          3
+      date_facturation     1
+      commentaire          11
+      status_dossier       12
+      type_controle        13
+      num_dossier          14
+      date_controle        15
+      type_traitement      23
+      type_installation    24
+      rejet_inf            25
+      conformite           26
+      impact               28
+      type_RPQS            27
+	  adresse_facturation  29
+	  cp_facturation       30 
+	  commune_facturation  31
+	  nom_propriaitaire     17
+	  prenom_propriaitaire  18
